@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mesai Takip Pro v8</title>
+    <style>
+        :root { --blue: #0984e3; --orange: #f39c12; --bg: #121212; --panel: #1e1e1e; --text: #e0e0e0; --green: #2ecc71; --dark-text: #2d3436; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); margin: 0; padding-bottom: 20px; font-size: 13px; }
+        
+        /* Üst Bilgi */
+        .user-info { background: var(--panel); padding: 10px; border-bottom: 1px solid var(--blue); display: flex; gap: 10px; }
+        .user-info input { background: transparent; border: none; border-bottom: 1px solid #333; color: var(--orange); flex: 1; font-size: 12px; outline: none; }
+
+        .nav { display: flex; justify-content: space-between; align-items: center; padding: 8px; background: #252525; }
+        .btn-nav { color: var(--blue); font-weight: bold; cursor: pointer; padding: 5px 12px; border: 1px solid var(--blue); border-radius: 4px; font-size: 11px; }
+
+        /* Takvim */
+        .calendar { padding: 5px; }
+        .grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px; background: #333; }
+        .weekday { text-align: center; font-size: 10px; padding: 4px 0; color: #888; background: #1a1a1a; }
+        .day { background: #1e1e1e; height: 55px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; position: relative; }
+        .day.pazar { color: #54a0ff; background: #222; }
+        .day-num { font-weight: bold; font-size: 13px; }
+        .day-info { font-size: 8px; color: var(--green); text-align: center; line-height: 1; font-weight: bold; }
+
+        /* Seçici Modlar */
+        .mode-selector { display: flex; gap: 3px; padding: 5px; background: #1a1a1a; justify-content: center; }
+        .mode-btn { flex: 1; padding: 8px 2px; border-radius: 4px; background: #333; color: #fff; cursor: pointer; font-size: 10px; text-align: center; border: 1px solid #444; }
+        .mode-btn.active { background: var(--blue); border-color: #fff; font-weight: bold; }
+
+        /* Giriş Paneli */
+        .panel { padding: 10px; }
+        .box { background: var(--panel); border-radius: 8px; padding: 10px; margin-bottom: 8px; border: 1px solid #2d2d2d; }
+        .row { display: flex; justify-content: space-between; margin-bottom: 6px; align-items: center; }
+        .row span { font-size: 12px; color: #bbb; }
+        .row input { width: 75px; padding: 6px; border-radius: 4px; border: 1px solid #333; text-align: center; font-weight: bold; background: #252525; color: #fff; font-size: 12px; }
+
+        /* Turuncu İstatistik Alanı (Okunabilirlik Artırıldı) */
+        .stats { background: var(--orange); color: var(--dark-text); border-radius: 8px; padding: 12px; font-weight: bold; box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
+        .stats .row span { color: var(--dark-text); font-weight: 800; }
+        .res-line { border-top: 1px solid rgba(0,0,0,0.15); margin-top: 8px; padding-top: 8px; }
+        
+        .mesai-total { font-size: 1.3rem; color: #c0392b; text-align: center; margin-bottom: 5px; }
+        .final-total { font-size: 1.3rem; color: #c0392b; text-align: center; border-top: 2px solid rgba(0,0,0,0.1); padding-top: 5px; }
+        
+        .save-btn { background: var(--green); color: white; width: 100%; padding: 14px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 15px; margin-top: 5px; text-shadow: 1px 1px 2px rgba(0,0,0,0.3); }
+        .clear-btn { position: absolute; top: 1px; right: 1px; color: #ff4757; font-size: 12px; font-weight: bold; background: none; border: none; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+<div class="user-info">
+    <input type="text" id="userName" placeholder="Ad Soyad">
+    <input type="text" id="companyName" placeholder="Firma">
+</div>
+
+<div class="nav">
+    <div class="btn-nav" onclick="changeMonth(-1)">◀</div>
+    <div id="monthLabel" style="font-weight:bold; font-size: 14px;">Nisan 2026</div>
+    <div class="btn-nav" onclick="changeMonth(1)">▶</div>
+</div>
+
+<div class="mode-selector">
+    <div class="mode-btn active" id="btnr50" onclick="setMode('r50')">%50</div>
+    <div class="mode-btn" id="btnr75" onclick="setMode('r75')">%75</div>
+    <div class="mode-btn" id="btnr100" onclick="setMode('r100')">%100</div>
+    <div class="mode-btn" id="btnrX" onclick="setMode('rX')">ÖZEL</div>
+</div>
+
+<div class="calendar">
+    <div class="grid">
+        <div class="weekday">Pzt</div><div class="weekday">Sal</div><div class="weekday">Çar</div>
+        <div class="weekday">Per</div><div class="weekday">Cum</div><div class="weekday">Cmt</div><div class="weekday">Paz</div>
+    </div>
+    <div id="calendarGrid" class="grid"></div>
+</div>
+
+<div class="panel">
+    <div class="box">
+        <div class="row"><span>Net Maaş:</span><input type="number" id="salary" placeholder="0" oninput="calc()"></div>
+        <div class="row"><span>Saat Ücreti:</span><input type="number" id="hRate" placeholder="Oto (225)" oninput="calc()"></div>
+    </div>
+
+    <div class="box">
+        <div class="row"><span>%50 / %75:</span>
+            <div style="display:flex; gap:5px;">
+                <input type="number" id="c50" value="1.5" step="0.1" style="width:40px" oninput="calc()">
+                <input type="number" id="c75" value="1.75" step="0.1" style="width:40px" oninput="calc()">
+            </div>
+        </div>
+        <div class="row"><span>%100 / ÖZEL:</span>
+            <div style="display:flex; gap:5px;">
+                <input type="number" id="c100" value="2.0" step="0.1" style="width:40px" oninput="calc()">
+                <input type="number" id="cX" value="2.5" step="0.1" style="width:40px" oninput="calc()">
+            </div>
+        </div>
+    </div>
+
+    <div class="stats">
+        <div class="row"><span>Toplam Mesai Saatleri:</span></div>
+        <div class="row" style="font-size:11px; margin-bottom:10px;">
+            <span id="sums">50:0 | 75:0 | 100:0 | Ö:0</span>
+        </div>
+        
+        <div class="res-line">
+            <div class="mesai-total">Mesai Kazancı: <span id="pureMesai">0</span> TL</div>
+            <div class="final-total">GENEL TOPLAM: <span id="totalFinal">0</span> TL</div>
+        </div>
+    </div>
+
+    <button class="save-btn" onclick="saveAll()">VERİLERİ KAYDET</button>
+</div>
+
+<script>
+    let m = new Date().getMonth(), y = new Date().getFullYear();
+    let data = JSON.parse(localStorage.getItem('mesai_v8_db')) || {};
+    let activeMode = 'r50';
+
+    function setMode(mode) {
+        activeMode = mode;
+        document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById('btn' + mode).classList.add('active');
+    }
+
+    function render() {
+        const grid = document.getElementById('calendarGrid');
+        grid.innerHTML = '';
+        const names = ["Ocak","Şubat","Mart","Nisan","Mayıs","Haziran","Temmuz","Ağustos","Eylül","Ekim","Kasım","Aralık"];
+        document.getElementById('monthLabel').innerText = names[m] + " " + y;
+
+        let first = new Date(y, m, 1).getDay();
+        first = (first === 0) ? 6 : first - 1;
+        let days = new Date(y, m + 1, 0).getDate();
+
+        for(let i=0; i<first; i++) grid.innerHTML += '<div class="day empty"></div>';
+
+        for(let d=1; d<=days; d++) {
+            let key = `${d}-${m}-${y}`;
+            let isPazar = new Date(y, m, d).getDay() === 0;
+            let info = "";
+            if(data[key]) {
+                const item = data[key];
+                if(item.r50) info += `50:${item.r50}h<br>`;
+                if(item.r75) info += `75:${item.r75}h<br>`;
+                if(item.r100) info += `100:${item.r100}h<br>`;
+                if(item.rX) info += `Ö:${item.rX}h`;
+            }
+
+            grid.innerHTML += `
+                <div class="day ${isPazar?'pazar':''}" onclick="quickEntry(${d})">
+                    <span class="day-num">${d}</span>
+                    <div class="day-info">${info}</div>
+                    ${data[key] ? `<button class="clear-btn" onclick="event.stopPropagation(); clearDay(${d})">×</button>` : ''}
+                </div>`;
+        }
+        calc();
+    }
+
+    function quickEntry(d) {
+        let key = `${d}-${m}-${y}`;
+        if(!data[key]) data[key] = {r50:0, r75:0, r100:0, rX:0};
+        let label = activeMode === 'r50' ? '%50' : (activeMode === 'r75' ? '%75' : (activeMode === 'r100' ? '%100' : 'ÖZEL'));
+        let val = prompt(`${d} Günü - ${label} Saati:`, data[key][activeMode]);
+        if(val !== null) {
+            data[key][activeMode] = parseFloat(val) || 0;
+            render();
+        }
+    }
+
+    function clearDay(d) {
+        if(confirm(`${d} tarihindeki tüm mesailer silinsin mi?`)) {
+            delete data[`${d}-${m}-${y}`];
+            render();
+        }
+    }
+
+    function calc() {
+        let sal = parseFloat(document.getElementById('salary').value) || 0;
+        let hrIn = parseFloat(document.getElementById('hRate').value);
+        let hr = (isNaN(hrIn) || hrIn === 0) ? (sal / 225) : hrIn;
+
+        let v50 = parseFloat(document.getElementById('c50').value) || 0;
+        let v75 = parseFloat(document.getElementById('c75').value) || 0;
+        let v100 = parseFloat(document.getElementById('c100').value) || 0;
+        let vX = parseFloat(document.getElementById('cX').value) || 0;
+
+        let t50=0, t75=0, t100=0, tX=0;
+        for(let k in data) {
+            let p = k.split('-');
+            if(parseInt(p[1]) === m && parseInt(p[2]) === y) {
+                t50 += data[k].r50 || 0; t75 += data[k].r75 || 0; 
+                t100 += data[k].r100 || 0; tX += data[k].rX || 0;
+            }
+        }
+
+        document.getElementById('sums').innerText = `50:${t50} | 75:${t75} | 100:${t100} | Ö:${tX}`;
+        
+        let mesaiKazanci = (t50*hr*v50) + (t75*hr*v75) + (t100*hr*v100) + (tX*hr*vX);
+        document.getElementById('pureMesai').innerText = Math.round(mesaiKazanci).toLocaleString('tr-TR');
+        document.getElementById('totalFinal').innerText = Math.round(sal + mesaiKazanci).toLocaleString('tr-TR');
+    }
+
+    function changeMonth(i) { m += i; if(m>11){m=0;y++} if(m<0){m=11;y--} render(); }
+
+    function saveAll() {
+        localStorage.setItem('mesai_v8_db', JSON.stringify(data));
+        localStorage.setItem('u_n8', document.getElementById('userName').value);
+        localStorage.setItem('c_n8', document.getElementById('companyName').value);
+        localStorage.setItem('l_hr8', document.getElementById('hRate').value);
+        localStorage.setItem('l_sal8', document.getElementById('salary').value);
+        alert("Başarıyla kaydedildi!");
+    }
+
+    window.onload = function() {
+        document.getElementById('userName').value = localStorage.getItem('u_n8') || "";
+        document.getElementById('companyName').value = localStorage.getItem('c_n8') || "";
+        document.getElementById('hRate').value = localStorage.getItem('l_hr8') || "";
+        document.getElementById('salary').value = localStorage.getItem('l_sal8') || "";
+        render();
+    };
+</script>
+</body>
+</html>
