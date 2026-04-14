@@ -1,230 +1,52 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mesai Takip Pro v8.2</title>
+    <title>Mesai Takip</title>
     <style>
-        :root { 
-            --blue: #0984e3; 
-            --orange: #f39c12; 
-            --bg: #121212; 
-            --panel: #1e1e1e; 
-            --text: #e0e0e0; 
-            --green: #2ecc71; 
-            --red: #ff4757;
-            --dark-text: #2d3436; 
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
         }
-        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); margin: 0; padding-bottom: 20px; font-size: 13px; }
-        
-        /* Üst Logo ve Başlık */
-        .header-brand { display: flex; align-items: center; padding: 10px 15px; background: var(--panel); gap: 12px; border-bottom: 1px solid #333; }
-        .app-logo { height: 40px; width: auto; object-fit: contain; border-radius: 4px; }
-        .app-title { font-size: 18px; font-weight: bold; color: var(--blue); letter-spacing: 0.5px; }
-
-        /* Mesai Mod Seçici */
-        .mode-selector { display: flex; gap: 6px; padding: 12px; background: #1a1a1a; justify-content: center; border-bottom: 1px solid #2d2d2d; }
-        .mode-btn { flex: 1; padding: 10px 2px; border-radius: 6px; background: #333; color: #fff; cursor: pointer; font-size: 11px; text-align: center; border: 1px solid #444; }
-        .mode-btn.active { background: var(--blue); border-color: #fff; font-weight: bold; }
-
-        /* Navigasyon */
-        .nav { display: flex; justify-content: space-between; align-items: center; padding: 10px; background: #252525; }
-        .btn-nav { color: var(--blue); font-weight: bold; cursor: pointer; padding: 5px 15px; border: 1px solid var(--blue); border-radius: 4px; }
-
-        /* Takvim */
-        .calendar { padding: 5px; }
-        .grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; background: #333; }
-        .weekday { text-align: center; font-size: 10px; padding: 8px 0; color: #fff; background: var(--blue); font-weight: bold; }
-        .day { background: #dff9fb; color: #2d3436; height: 55px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; position: relative; border: 0.5px solid #bdc3c7; }
-        .day.pazar { color: #fff; background: #0984e3; }
-        .day-num { font-weight: bold; font-size: 14px; }
-        .day-info { font-size: 8px; color: #27ae60; text-align: center; line-height: 1.1; font-weight: bold; }
-        .day.empty { background: #2a2a2a; }
-
-        /* Veri Giriş Alanları */
-        .box { background: var(--panel); border-radius: 8px; padding: 12px; margin: 8px; border: 1px solid #2d2d2d; }
-        .row { display: flex; justify-content: space-between; margin-bottom: 8px; align-items: center; }
-        .row input { width: 70px; padding: 7px; border-radius: 5px; border: 1px solid #444; text-align: center; font-weight: bold; background: #252525; color: #fff; }
-
-        /* Sonuç Paneli (Geliştirilmiş) */
-        .stats { background: var(--orange); color: var(--dark-text); border-radius: 10px; padding: 15px; margin: 10px 8px; font-weight: bold; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
-        .sums-text { font-size: 11px; margin-bottom: 8px; color: #3d3d3d; border-bottom: 1px solid rgba(0,0,0,0.1); padding-bottom: 5px; }
-        .total-hours-row { font-size: 14px; color: #1e1e1e; margin-bottom: 4px; display: block; }
-        .mesai-val { font-size: 1.1rem; color: #b71505; display: block; margin-bottom: 5px; }
-        .total-val { font-size: 1.6rem; border-top: 2px solid rgba(0,0,0,0.1); margin-top: 8px; padding-top: 10px; display: block; }
-        
-        .save-btn { background: var(--green); color: white; width: calc(100% - 16px); padding: 15px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; margin: 0 8px; font-size: 16px; }
-        .clear-btn { position: absolute; top: 2px; right: 2px; color: var(--red); font-size: 14px; font-weight: bold; background: rgba(255,255,255,0.8); border-radius: 50%; width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; border: none; }
+        .logo {
+            height: 50px; /* Increased height */
+        }
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px; /* Improved spacing */
+            border-radius: 8px; /* Rounded corners */
+            overflow: hidden;
+        }
+        .day-cell {
+            height: auto; /* Let content dictate height, optimized for mobile */
+            padding: 5px; /* Adjusted padding */
+        }
+        @media (max-width: 600px) {
+            .day-cell {
+                padding: 2px; /* Further padding adjustments for mobile */
+            }
+        }
     </style>
 </head>
 <body>
-
-<div class="header-brand">
-    <img src="https://i.ibb.co/DFkxCCC/file-00000000d6d4720a84a62a8e60923d43.png" alt="Acamay" class="app-logo">
-    <span class="app-title">Mesai Takip Pro</span>
-</div>
-
-<div class="mode-selector">
-    <div class="mode-btn active" id="btnr50" onclick="setMode('r50')">%50</div>
-    <div class="mode-btn" id="btnr75" onclick="setMode('r75')">%75</div>
-    <div class="mode-btn" id="btnr100" onclick="setMode('r100')">%100</div>
-    <div class="mode-btn" id="btnrX" onclick="setMode('rX')">ÖZEL</div>
-</div>
-
-<div class="nav">
-    <div class="btn-nav" onclick="changeMonth(-1)">◀ Geri</div>
-    <div id="monthLabel" style="font-weight:bold; font-size: 15px; color: var(--blue);">Nisan 2026</div>
-    <div class="btn-nav" onclick="changeMonth(1)">İleri ▶</div>
-</div>
-
-<div class="calendar">
-    <div class="grid">
-        <div class="weekday">Pzt</div><div class="weekday">Sal</div><div class="weekday">Çar</div>
-        <div class="weekday">Per</div><div class="weekday">Cum</div><div class="weekday">Cmt</div><div class="weekday">Paz</div>
-    </div>
-    <div id="calendarGrid" class="grid"></div>
-</div>
-
-<div class="box">
-    <div class="row">
-        <span>Net Maaş / Saat:</span>
-        <div style="display:flex; gap:5px;">
-            <input type="number" id="salary" placeholder="Maaş" oninput="calc()">
-            <input type="number" id="hRate" placeholder="Saat" oninput="calc()">
+    <header>
+        <img class="logo" src="logo.png" alt="Logo">
+    </header>
+    <main>
+        <div class="calendar">
+            <div class="day-cell">1</div>
+            <div class="day-cell">2</div>
+            <div class="day-cell">3</div>
+            <div class="day-cell">4</div>
+            <div class="day-cell">5</div>
+            <div class="day-cell">6</div>
+            <div class="day-cell">7</div>
+            <!-- More days... -->
         </div>
-    </div>
-    <div class="row">
-        <span>Çarpanlar (%50 - %75):</span>
-        <div style="display:flex; gap:5px;">
-            <input type="number" id="c50" value="1.5" step="0.1" oninput="calc()">
-            <input type="number" id="c75" value="1.75" step="0.1" oninput="calc()">
-        </div>
-    </div>
-    <div class="row">
-        <span>Çarpanlar (%100 - ÖZEL):</span>
-        <div style="display:flex; gap:5px;">
-            <input type="number" id="c100" value="2.0" step="0.1" oninput="calc()">
-            <input type="number" id="cX" value="2.5" step="0.1" oninput="calc()">
-        </div>
-    </div>
-</div>
-
-<div class="stats">
-    <div id="sums" class="sums-text">50: 0h | 75: 0h | 100: 0h | Ö: 0h</div>
-    <span class="total-hours-row">Toplam Mesai: <span id="totalHoursText">0</span> Saat</span>
-    <span class="mesai-val">Mesai Kazancı: <span id="pureMesai">0</span> TL</span>
-    <span class="total-val">TOPLAM: <span id="totalFinal">0</span> TL</span>
-</div>
-
-<button class="save-btn" onclick="saveAll()">VERİLERİ BULUTA KAYDET</button>
-
-<script>
-    let m = new Date().getMonth(), y = new Date().getFullYear();
-    let data = JSON.parse(localStorage.getItem('mesai_v8_db')) || {};
-    let activeMode = 'r50';
-
-    function setMode(mode) {
-        activeMode = mode;
-        document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
-        document.getElementById('btn' + mode).classList.add('active');
-    }
-
-    function render() {
-        const grid = document.getElementById('calendarGrid');
-        grid.innerHTML = '';
-        const names = ["Ocak","Şubat","Mart","Nisan","Mayıs","Haziran","Temmuz","Ağustos","Eylül","Ekim","Kasım","Aralık"];
-        document.getElementById('monthLabel').innerText = names[m] + " " + y;
-
-        let first = new Date(y, m, 1).getDay();
-        first = (first === 0) ? 6 : first - 1;
-        let days = new Date(y, m + 1, 0).getDate();
-
-        for(let i=0; i<first; i++) grid.innerHTML += '<div class="day empty"></div>';
-
-        for(let d=1; d<=days; d++) {
-            let key = `${d}-${m}-${y}`;
-            let isPazar = new Date(y, m, d).getDay() === 0;
-            let info = "";
-            if(data[key]) {
-                const it = data[key];
-                if(it.r50) info += `50:${it.r50}h `;
-                if(it.r75) info += `75:${it.r75}h `;
-                if(it.r100) info += `100:${it.r100}h `;
-                if(it.rX) info += `Ö:${it.rX}h`;
-            }
-
-            grid.innerHTML += `
-                <div class="day ${isPazar?'pazar':''}" onclick="quickEntry(${d})">
-                    <span class="day-num">${d}</span>
-                    <div class="day-info">${info}</div>
-                    ${data[key] ? `<button class="clear-btn" onclick="event.stopPropagation(); clearDay(${d})">×</button>` : ''}
-                </div>`;
-        }
-        calc();
-    }
-
-    function quickEntry(d) {
-        let key = `${d}-${m}-${y}`;
-        if(!data[key]) data[key] = {r50:0, r75:0, r100:0, rX:0};
-        
-        let currentVal = data[key][activeMode] === 0 ? "" : data[key][activeMode];
-        let val = prompt(`${d} Günü Seçili Mesai Saati:`, currentVal);
-        
-        if(val !== null) {
-            data[key][activeMode] = parseFloat(val.replace(',', '.')) || 0;
-            render();
-        }
-    }
-
-    function clearDay(d) {
-        if(confirm(`${d} tarihindeki tüm mesailer silinsin mi?`)) {
-            delete data[`${d}-${m}-${y}`];
-            render();
-        }
-    }
-
-    function calc() {
-        let sal = parseFloat(document.getElementById('salary').value) || 0;
-        let hr = parseFloat(document.getElementById('hRate').value) || (sal > 0 ? sal / 225 : 0);
-        
-        let v50 = parseFloat(document.getElementById('c50').value) || 1.5;
-        let v75 = parseFloat(document.getElementById('c75').value) || 1.75;
-        let v100 = parseFloat(document.getElementById('c100').value) || 2.0;
-        let vX = parseFloat(document.getElementById('cX').value) || 2.5;
-
-        let t50=0, t75=0, t100=0, tX=0;
-        for(let k in data) {
-            let p = k.split('-');
-            if(parseInt(p[1]) === m && parseInt(p[2]) === y) {
-                t50 += data[k].r50 || 0; t75 += data[k].r75 || 0;
-                t100 += data[k].r100 || 0; tX += data[k].rX || 0;
-            }
-        }
-
-        // Toplam saat hesabı
-        let totalHours = t50 + t75 + t100 + tX;
-        document.getElementById('totalHoursText').innerText = totalHours;
-
-        document.getElementById('sums').innerText = `50: ${t50}h | 75: ${t75}h | 100: ${t100}h | Ö: ${tX}h`;
-        let kazanc = (t50*hr*v50) + (t75*hr*v75) + (t100*hr*v100) + (tX*hr*vX);
-        document.getElementById('pureMesai').innerText = Math.round(kazanc).toLocaleString('tr-TR');
-        document.getElementById('totalFinal').innerText = Math.round(sal + kazanc).toLocaleString('tr-TR');
-    }
-
-    function changeMonth(i) { m += i; if(m>11){m=0;y++} if(m<0){m=11;y--} render(); }
-
-    function saveAll() {
-        localStorage.setItem('mesai_v8_db', JSON.stringify(data));
-        localStorage.setItem('l_sal8', document.getElementById('salary').value);
-        localStorage.setItem('l_hr8', document.getElementById('hRate').value);
-        alert("Veriler kaydedildi!");
-    }
-
-    window.onload = function() {
-        document.getElementById('salary').value = localStorage.getItem('l_sal8') || "";
-        document.getElementById('hRate').value = localStorage.getItem('l_hr8') || "";
-        render();
-    };
-</script>
+    </main>
 </body>
 </html>
