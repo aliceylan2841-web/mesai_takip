@@ -19,7 +19,7 @@
         
         /* Üst Logo ve Başlık */
         .header-brand { display: flex; align-items: center; padding: 10px 20px; background: var(--panel); gap: 14px; border-bottom: 1px solid #333; }
-        .app-logo { height: 60px; width: auto; object-fit: contain; border-radius: 4px; }
+        .app-logo { height: 60px; width: auto; object-fit: contain; border-radius: 10px; }
         .app-title { font-size: 20px; font-weight: bold; color: var(--blue); letter-spacing: 0.5px; }
 
         /* Mesai Mod Seçici */
@@ -36,7 +36,7 @@
         .calendar { padding: 5px; }
         .grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; background: #333; border: 1px solid #333; }
         .weekday { text-align: center; font-size: 8px; padding: 6px 0; color: #fff; background: var(--blue); font-weight: bold; text-transform: uppercase; }
-        .day { background: #dff9fb; color: #2d3436; height: 45px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; position: relative; border: 0.5px solid #bdc3c7; transition: 0.1s; }
+        .day { background: #dff9fb; color: #2d3436; height: 35px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; position: relative; border: 0.5px solid #bdc3c7; transition: 0.1s; }
         .day:active { opacity: 0.7; }
         .day.pazar { color: #fff; background: #0984e3; }
         .day-num { font-weight: bold; font-size: 10px; margin-bottom: 2px; }
@@ -54,12 +54,12 @@
         .stats { background: var(--orange); color: var(--dark-text); border-radius: 10px; padding: 15px; margin: 10px 8px; font-weight: bold; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
         .sums-text { font-size: 11px; margin-bottom: 8px; color: #3d3d3d; border-bottom: 1px solid rgba(0,0,0,0.1); padding-bottom: 5px; }
         .mesai-val { font-size: 1.1rem; color: #b71505; display: block; margin-bottom: 5px; }
-        .total-val { font-size: 1.6rem; border-top: 2px solid rgba(0,0,0,0.1); margin-top: 8px; padding-top: 10px; display: block; color: #1e1e1e; }
+        .total-val { font-size: 1.6rem; border-top: 2px solid rgba(0,0,0,0.1); margin-top: 6px; padding-top: 8px; display: block; color: #1e1e1e; }
         
         /* Butonlar */
         .save-btn { background: var(--green); color: white; width: calc(100% - 16px); padding: 15px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; margin: 0 8px; font-size: 16px; box-shadow: 0 3px 0 #27ae60; transition: 0.2s; }
         .save-btn:active { transform: translateY(2px); box-shadow: none; }
-        .clear-btn { position: absolute; top: 2px; right: 2px; color: var(--red); font-size: 14px; font-weight: bold; background: rgba(255,255,255,0.8); border-radius: 50%; width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; border: none; }
+        .clear-btn { position: absolute; top: 2px; right: 2px; color: var(--red); font-size: 14px; font-weight: bold; background: rgba(255,255,255,0.8); border-radius: 50%; width: 18px; height: 14px; display: flex; align-items: center; justify-content: center; border: none; }
     </style>
 </head>
 <body>
