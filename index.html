@@ -2,130 +2,175 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mesai Takip Pro v8.1</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Mesai Takip Pro v9.3</title>
     <style>
         :root { 
-            --blue: #0984e3; 
-            --orange: #f39c12; 
-            --bg: #121212; 
-            --panel: #1e1e1e; 
-            --text: #e0e0e0; 
-            --green: #2ecc71; 
-            --red: #ff4757;
-            --dark-text: #2d3436; 
+            --blue: #0984e3; --orange: #f39c12; --bg: #121212; 
+            --panel: #1e1e1e; --text: #e0e0e0; --green: #2ecc71; 
+            --red: #ff4757; --accent: #00cec9; 
         }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding-bottom: 20px; font-size: 13px; }
         
-        /* Üst Logo ve Başlık */
-        .header-brand { display: flex; align-items: center; padding: 10px 15px; background: var(--panel); gap: 12px; border-bottom: 1px solid #333; }
-        .app-logo { height: 40px; width: auto; object-fit: contain; border-radius: 4px; }
-        .app-title { font-size: 18px; font-weight: bold; color: var(--blue); letter-spacing: 0.5px; }
-
-        /* Mesai Mod Seçici */
-        .mode-selector { display: flex; gap: 6px; padding: 12px; background: #1a1a1a; justify-content: center; border-bottom: 1px solid #2d2d2d; }
-        .mode-btn { flex: 1; padding: 10px 2px; border-radius: 6px; background: #333; color: #fff; cursor: pointer; font-size: 11px; text-align: center; border: 1px solid #444; transition: 0.2s; }
-        .mode-btn.active { background: var(--blue); border-color: #fff; font-weight: bold; box-shadow: 0 0 8px rgba(9, 132, 227, 0.4); }
-
-        /* Navigasyon */
-        .nav { display: flex; justify-content: space-between; align-items: center; padding: 10px; background: #252525; }
-        .btn-nav { color: var(--blue); font-weight: bold; cursor: pointer; padding: 5px 15px; border: 1px solid var(--blue); border-radius: 4px; user-select: none; }
-        .btn-nav:active { background: var(--blue); color: white; }
-
-        /* Takvim */
-        .calendar { padding: 5px; }
-        .grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; background: #333; border: 1px solid #333; }
-        .weekday { text-align: center; font-size: 10px; padding: 8px 0; color: #fff; background: var(--blue); font-weight: bold; text-transform: uppercase; }
-        .day { background: #dff9fb; color: #2d3436; height: 55px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; position: relative; border: 0.5px solid #bdc3c7; transition: 0.1s; }
-        .day:active { opacity: 0.7; }
-        .day.pazar { color: #fff; background: #0984e3; }
-        .day-num { font-weight: bold; font-size: 14px; margin-bottom: 2px; }
-        .day-info { font-size: 8px; color: #27ae60; text-align: center; line-height: 1.1; font-weight: bold; max-width: 95%; overflow: hidden; }
-        .day.empty { background: #2a2a2a; border: none; }
-
-        /* Veri Giriş Alanları */
-        .box { background: var(--panel); border-radius: 8px; padding: 12px; margin: 8px; border: 1px solid #2d2d2d; }
-        .row { display: flex; justify-content: space-between; margin-bottom: 8px; align-items: center; }
-        .row span { font-size: 12px; font-weight: 500; }
-        .row input { width: 70px; padding: 7px; border-radius: 5px; border: 1px solid #444; text-align: center; font-weight: bold; background: #252525; color: #fff; outline: none; }
-        .row input:focus { border-color: var(--blue); }
-
-        /* Sonuç Paneli */
-        .stats { background: var(--orange); color: var(--dark-text); border-radius: 10px; padding: 15px; margin: 10px 8px; font-weight: bold; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
-        .sums-text { font-size: 11px; margin-bottom: 8px; color: #3d3d3d; border-bottom: 1px solid rgba(0,0,0,0.1); padding-bottom: 5px; }
-        .mesai-val { font-size: 1.1rem; color: #b71505; display: block; margin-bottom: 5px; }
-        .total-val { font-size: 1.6rem; border-top: 2px solid rgba(0,0,0,0.1); margin-top: 8px; padding-top: 10px; display: block; color: #1e1e1e; }
+        html, body { 
+            height: 100%; margin: 0; padding: 0; overflow: hidden; 
+            font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); 
+            display: flex; flex-direction: column; 
+        }
         
-        /* Butonlar */
-        .save-btn { background: var(--green); color: white; width: calc(100% - 16px); padding: 15px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; margin: 0 8px; font-size: 16px; box-shadow: 0 3px 0 #27ae60; transition: 0.2s; }
-        .save-btn:active { transform: translateY(2px); box-shadow: none; }
-        .clear-btn { position: absolute; top: 2px; right: 2px; color: var(--red); font-size: 14px; font-weight: bold; background: rgba(255,255,255,0.8); border-radius: 50%; width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; border: none; }
+        .header-brand { 
+            display: flex; align-items: center; padding: 0 10px; 
+            background: var(--panel); border-bottom: 2px solid #333; height: 80px; flex-shrink: 0;
+        }
+        .app-logo { height: 110px; margin-right: 20px; }
+        .app-title { font-size: 20px; font-weight: bold; color: var(--blue); }
+
+        .mode-selector { 
+            display: grid; grid-template-columns: repeat(6, 1fr); gap: 3px; 
+            padding: 5px; background: #1a1a1a; flex-shrink: 0;
+        }
+        .mode-btn { 
+            padding: 6px 0; border-radius: 4px; background: #333; color: #fff; 
+            font-size: 9px; text-align: center; border: 1px solid #444; 
+        }
+        .mode-btn.active { background: var(--blue); border-color: #fff; }
+
+        .nav { 
+            display: flex; justify-content: space-between; align-items: center; 
+            padding: 4px 15px; background: #252525; flex-shrink: 0;
+        }
+        .btn-nav { color: var(--blue); font-weight: bold; padding: 2px 8px; border: 2px solid var(--blue); border-radius: 4px; font-size: 11px; }
+
+        .calendar { padding: 1px; flex-shrink: 1; overflow: hidden; }
+        .grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; background: #333; }
+        .weekday { text-align: center; font-size: 8px; padding: 15px 0; color: #fff; background: var(--blue); }
+        
+        /* GÜN KUTUCUĞU TEMEL STİL */
+        .day { 
+            background: #ecf0f1; color: #2d3436; display: flex; flex-direction: column; 
+            align-items: center; justify-content: center; position: relative; 
+            border: 1px solid #bdc3c7; height: 40px; 
+        }
+        
+        /* PAZAR GÜNLERİ */
+        .day.pazar { background: #3498db !important; color: #fff !important; }
+        
+        /* RESMİ TATİLLER (KIRMIZI) */
+        .day.holiday { background: #ff4757 !important; color: #fff !important; }
+        
+        /* BUGÜNÜN İŞARETİ */
+        .day.today { border: 3px solid var(--orange) !important; box-shadow: inset 0 0 8px rgba(243, 156, 18, 0.6); }
+        .day.today .day-num { color: #d35400; font-size: 13px; }
+        
+        .day-num { font-weight: bold; font-size: 11px; }
+        .day-info { font-size: 7px; color: #b71505; font-weight: bold; }
+        .day.empty { background: #2a2a2a !important; border: none; }
+
+        .salary-panel {
+            background: #252525; margin: 4px; padding: 8px; border-radius: 8px;
+            border-left: 4px solid var(--blue); flex-shrink: 0;
+            display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+        }
+        .input-group { display: flex; flex-direction: column; }
+        .input-group label { font-size: 10px; color: var(--accent); font-weight: bold; margin-bottom: 2px; }
+        .modern-input {
+            background: #fff; color: #000; border: 2px solid #444; 
+            padding: 6px; border-radius: 6px; font-size: 10px; 
+            font-weight: bold; text-align: center; height: 45px;
+        }
+
+        .multiplier-box {
+            display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; 
+            padding: 0 4px; flex-shrink: 0;
+        }
+        .multiplier-box input {
+            width: 100%; padding: 4px 0; border-radius: 4px; border: 1px solid #444; 
+            background: #1a1a1a; color: var(--accent); text-align: center; font-size: 10px;
+        }
+
+        .stats { 
+            background: var(--orange); color: #000; padding: 4px; margin: 4px; 
+            border-radius: 8px; text-align: center; flex-shrink: 0;
+        }
+        .sums-line { font-size: 9px; font-weight: bold; opacity: 0.8; }
+        .mesai-line { font-size: 12px; font-weight: bold; color: #b71505; margin: 1px 0; }
+        .total-line { font-size: 17px; font-weight: bold; border-top: 1px solid rgba(0,0,0,0.1); }
+        
+        .save-btn { 
+            background: var(--green); color: white; width: calc(100% - 8px); 
+            padding: 12px; border: none; border-radius: 8px; font-weight: bold; 
+            margin: 0 4px 6px 4px; flex-shrink: 0; font-size: 14px;
+        }
+        .clear-btn { position: absolute; top: 0; right: 0; color: var(--red); font-size: 9px; background: #fff; border-radius: 50%; width: 12px; height: 12px; display: flex; align-items: center; justify-content: center; border: none; }
     </style>
 </head>
 <body>
 
 <div class="header-brand">
-    <img src="https://i.ibb.co/DFkxCCC/file-00000000d6d4720a84a62a8e60923d43.png" alt="Acamay" class="app-logo">
-    <span class="app-title">Mesai Takip Pro</span>
+    <img src="https://i.ibb.co/DFkxCCC/file-00000000d6d4720a84a62a8e60923d43.png" alt="Logo" class="app-logo">
+    <span class="app-title">MESAİ TAKİP PRO</span>
 </div>
 
 <div class="mode-selector">
     <div class="mode-btn active" id="btnr50" onclick="setMode('r50')">%50</div>
+    <div class="mode-btn" id="btnr65" onclick="setMode('r65')">%65</div>
     <div class="mode-btn" id="btnr75" onclick="setMode('r75')">%75</div>
     <div class="mode-btn" id="btnr100" onclick="setMode('r100')">%100</div>
+    <div class="mode-btn" id="btnr200" onclick="setMode('r200')">%200</div>
     <div class="mode-btn" id="btnrX" onclick="setMode('rX')">ÖZEL</div>
 </div>
 
 <div class="nav">
-    <div class="btn-nav" onclick="changeMonth(-1)">◀ Geri</div>
-    <div id="monthLabel" style="font-weight:bold; font-size: 15px; color: var(--blue);">Nisan 2026</div>
-    <div class="btn-nav" onclick="changeMonth(1)">İleri ▶</div>
+    <div class="btn-nav" onclick="changeMonth(-1)">◀</div>
+    <div id="monthLabel" style="font-weight:bold; font-size: 12px;"></div>
+    <div class="btn-nav" onclick="changeMonth(1)">▶</div>
 </div>
 
 <div class="calendar">
     <div class="grid">
-        <div class="weekday">Pzt</div><div class="weekday">Sal</div><div class="weekday">Çar</div>
-        <div class="weekday">Per</div><div class="weekday">Cum</div><div class="weekday">Cmt</div><div class="weekday">Paz</div>
+        <div class="weekday">Pz</div><div class="weekday">Sa</div><div class="weekday">Ça</div>
+        <div class="weekday">Pe</div><div class="weekday">Cu</div><div class="weekday">Ct</div><div class="weekday">Pa</div>
     </div>
     <div id="calendarGrid" class="grid"></div>
 </div>
 
-<div class="box">
-    <div class="row">
-        <span>Net Maaş / Saat:</span>
-        <div style="display:flex; gap:5px;">
-            <input type="number" id="salary" placeholder="Maaş" oninput="calc()">
-            <input type="number" id="hRate" placeholder="Saat" oninput="calc()">
-        </div>
+<div class="salary-panel">
+    <div class="input-group">
+        <label>NET MAAŞ</label>
+        <input type="number" id="salary" class="modern-input" placeholder="0" oninput="calc()">
     </div>
-    <div class="row">
-        <span>Çarpanlar (%50 - %75):</span>
-        <div style="display:flex; gap:5px;">
-            <input type="number" id="c50" value="1.5" step="0.1" oninput="calc()">
-            <input type="number" id="c75" value="1.75" step="0.1" oninput="calc()">
-        </div>
+    <div class="input-group">
+        <label>SAAT ÜCRETİ</label>
+        <input type="number" id="hRate" class="modern-input" placeholder="0" oninput="calc()">
     </div>
-    <div class="row">
-        <span>Çarpanlar (%100 - ÖZEL):</span>
-        <div style="display:flex; gap:5px;">
-            <input type="number" id="c100" value="2.0" step="0.1" oninput="calc()">
-            <input type="number" id="cX" value="2.5" step="0.1" oninput="calc()">
-        </div>
-    </div>
+</div>
+
+<div class="multiplier-box">
+    <input type="number" id="c50" value="1.5" step="0.05" oninput="calc()">
+    <input type="number" id="c65" value="1.65" step="0.05" oninput="calc()">
+    <input type="number" id="c75" value="1.75" step="0.05" oninput="calc()">
+    <input type="number" id="c100" value="2.0" step="0.05" oninput="calc()">
+    <input type="number" id="c200" value="3.0" step="0.05" oninput="calc()">
+    <input type="number" id="cX" value="2.5" oninput="calc()">
 </div>
 
 <div class="stats">
-    <div id="sums" class="sums-text">50: 0h | 75: 0h | 100: 0h | Ö: 0h</div>
-    <span class="mesai-val">Mesai Kazancı: <span id="pureMesai">0</span> TL</span>
-    <span class="total-val">TOPLAM: <span id="totalFinal">0</span> TL</span>
+    <div id="sums" class="sums-line">H: 0|0|0|0|0|0</div>
+    <div class="mesai-line">Mesai Kazancı: <span id="pureMesai">0</span> TL</div>
+    <div class="total-line">TOPLAM: <span id="totalFinal">0</span> TL</div>
 </div>
 
-<button class="save-btn" onclick="saveAll()">VERİLERİ BULUTA KAYDET</button>
+<button class="save-btn" onclick="saveAll()">VERİLERİ KAYDET</button>
 
 <script>
     let m = new Date().getMonth(), y = new Date().getFullYear();
     let data = JSON.parse(localStorage.getItem('mesai_v8_db')) || {};
     let activeMode = 'r50';
+
+    // 2026 Resmi Tatilleri (G-A formatında)
+    const holidays = [
+        "1-0", "19-2", "20-2", "21-2", "23-3", "1-4", "19-4", 
+        "26-4", "27-4", "28-4", "29-4", "15-6", "30-7", "29-9"
+    ];
 
     function setMode(mode) {
         activeMode = mode;
@@ -139,6 +184,9 @@
         const names = ["Ocak","Şubat","Mart","Nisan","Mayıs","Haziran","Temmuz","Ağustos","Eylül","Ekim","Kasım","Aralık"];
         document.getElementById('monthLabel').innerText = names[m] + " " + y;
 
+        const today = new Date();
+        const tDay = today.getDate(), tMonth = today.getMonth(), tYear = today.getFullYear();
+
         let first = new Date(y, m, 1).getDay();
         first = (first === 0) ? 6 : first - 1;
         let days = new Date(y, m + 1, 0).getDate();
@@ -147,18 +195,25 @@
 
         for(let d=1; d<=days; d++) {
             let key = `${d}-${m}-${y}`;
+            let holidayKey = `${d}-${m}`;
             let isPazar = new Date(y, m, d).getDay() === 0;
+            let isToday = (d === tDay && m === tMonth && y === tYear);
+            let isHoliday = holidays.includes(holidayKey);
+            
             let info = "";
             if(data[key]) {
                 const it = data[key];
-                if(it.r50) info += `50:${it.r50}h `;
-                if(it.r75) info += `75:${it.r75}h `;
-                if(it.r100) info += `100:${it.r100}h `;
-                if(it.rX) info += `Ö:${it.rX}h`;
+                if(it.r50) info += `${it.r50} `;
+                if(it.r65) info += `${it.r65} `;
+                if(it.r75) info += `${it.r75} `;
+                if(it.r100) info += `${it.r100} `;
+                if(it.r200) info += `${it.r200} `;
+                if(it.rX) info += `Ö:${it.rX}`;
             }
 
+            // Önce Pazar, sonra Tatil kontrolü ile sınıfları ekliyoruz
             grid.innerHTML += `
-                <div class="day ${isPazar?'pazar':''}" onclick="quickEntry(${d})">
+                <div class="day ${isPazar?'pazar':''} ${isHoliday?'holiday':''} ${isToday?'today':''}" onclick="quickEntry(${d})">
                     <span class="day-num">${d}</span>
                     <div class="day-info">${info}</div>
                     ${data[key] ? `<button class="clear-btn" onclick="event.stopPropagation(); clearDay(${d})">×</button>` : ''}
@@ -169,11 +224,8 @@
 
     function quickEntry(d) {
         let key = `${d}-${m}-${y}`;
-        if(!data[key]) data[key] = {r50:0, r75:0, r100:0, rX:0};
-        
-        let currentVal = data[key][activeMode] === 0 ? "" : data[key][activeMode];
-        let val = prompt(`${d} Günü için Saat Giriniz (${activeMode.replace('r','%')}):`, currentVal);
-        
+        if(!data[key]) data[key] = {r50:0, r65:0, r75:0, r100:0, r200:0, rX:0};
+        let val = prompt(`${d} Günü (${activeMode.replace('r','%')}):`, data[key][activeMode] || "");
         if(val !== null) {
             data[key][activeMode] = parseFloat(val.replace(',', '.')) || 0;
             render();
@@ -181,7 +233,7 @@
     }
 
     function clearDay(d) {
-        if(confirm(`${d} tarihindeki tüm mesailer silinsin mi?`)) {
+        if(confirm(`${d} temizlensin mi?`)) {
             delete data[`${d}-${m}-${y}`];
             render();
         }
@@ -190,23 +242,21 @@
     function calc() {
         let sal = parseFloat(document.getElementById('salary').value) || 0;
         let hr = parseFloat(document.getElementById('hRate').value) || (sal > 0 ? sal / 225 : 0);
-        
-        let v50 = parseFloat(document.getElementById('c50').value) || 1.5;
-        let v75 = parseFloat(document.getElementById('c75').value) || 1.75;
-        let v100 = parseFloat(document.getElementById('c100').value) || 2.0;
-        let vX = parseFloat(document.getElementById('cX').value) || 2.5;
+        let v50 = parseFloat(document.getElementById('c50').value) || 0, v65 = parseFloat(document.getElementById('c65').value) || 0;
+        let v75 = parseFloat(document.getElementById('c75').value) || 0, v100 = parseFloat(document.getElementById('c100').value) || 0;
+        let v200 = parseFloat(document.getElementById('c200').value) || 0, vX = parseFloat(document.getElementById('cX').value) || 0;
 
-        let t50=0, t75=0, t100=0, tX=0;
+        let t50=0, t65=0, t75=0, t100=0, t200=0, tX=0;
         for(let k in data) {
             let p = k.split('-');
             if(parseInt(p[1]) === m && parseInt(p[2]) === y) {
-                t50 += data[k].r50 || 0; t75 += data[k].r75 || 0;
-                t100 += data[k].r100 || 0; tX += data[k].rX || 0;
+                t50 += data[k].r50 || 0; t65 += data[k].r65 || 0;
+                t75 += data[k].r75 || 0; t100 += data[k].r100 || 0;
+                t200 += data[k].r200 || 0; tX += data[k].rX || 0;
             }
         }
-
-        document.getElementById('sums').innerText = `50: ${t50}h | 75: ${t75}h | 100: ${t100}h | Ö: ${tX}h`;
-        let kazanc = (t50*hr*v50) + (t75*hr*v75) + (t100*hr*v100) + (tX*hr*vX);
+        document.getElementById('sums').innerText = `H: ${t50}|${t65}|${t75}|${t100}|${t200}|${tX}`;
+        let kazanc = (t50*hr*v50) + (t65*hr*v65) + (t75*hr*v75) + (t100*hr*v100) + (t200*hr*v200) + (tX*hr*vX);
         document.getElementById('pureMesai').innerText = Math.round(kazanc).toLocaleString('tr-TR');
         document.getElementById('totalFinal').innerText = Math.round(sal + kazanc).toLocaleString('tr-TR');
     }
@@ -217,7 +267,7 @@
         localStorage.setItem('mesai_v8_db', JSON.stringify(data));
         localStorage.setItem('l_sal8', document.getElementById('salary').value);
         localStorage.setItem('l_hr8', document.getElementById('hRate').value);
-        alert("Veriler başarıyla cihazınıza kaydedildi!");
+        alert("Başarıyla Kaydedildi!");
     }
 
     window.onload = function() {
