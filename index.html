@@ -306,6 +306,17 @@
         document.getElementById('hRate').value = localStorage.getItem('l_hr8') || "";
         render();
     };
+
+    function formatTL(input) {
+    let value = input.value.replace(" TL", ""); // Varsa eski TL'yi sil
+    if (value !== "" && !isNaN(value)) {
+        input.value = value + " TL";
+    }
+}
+
+function clearTL(input) {
+    input.value = input.value.replace(" TL", ""); // Düzenlemek için TL'yi kaldır
+}
 </script>
 </body>
 </html>
