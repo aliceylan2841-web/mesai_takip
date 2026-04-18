@@ -180,11 +180,9 @@
 </div>
 
 <div class="input-group">
-    <label>SAAT ÜCRETİ</label>
-    <div class="input-wrapper">
-        <input type="number" class="modern-input" placeholder="0 ">
-        <span class="currency">TL</span>
-    </div>
+    <label>Maaş</label>
+    <input type="text" class="modern-input" id="maasInput" placeholder="0 TL" onblur="formatTL(this)" onfocus="clearTL(this)">
+</div>
 </div>
 
 <div class="multiplier-box">
