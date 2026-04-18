@@ -77,39 +77,35 @@
     margin-bottom: 10px;
 }
 
-.input-wrapper {
-    position: relative; /* TL yazısını içine sabitlemek için */
-    display: flex;
-    align-items: center;
+.input-group { 
+    display: flex; 
+    flex-direction: column; 
+    position: relative;
+}
+
+.input-group label { 
+    font-size: 10px; 
+    color: var(--accent); 
+    font-weight: bold; 
+    margin-bottom: 2px; 
 }
 
 .modern-input {
-    box-sizing: border-box; /* ÖNEMLİ: Border dahil 35px kalmasını sağlar */
     background: #fff; 
     color: #000; 
     border: 8px solid #444; 
-    padding: 4px 30px 4px 4px; /* Sağdan TL için boşluk bıraktık */
+    padding: 4px; 
     border-radius: 8px; 
+    font-weight: bold; 
     text-align: center; 
-    height: 35px; 
-    width: 100%;
     
-    /* YAZI BOYUTU BURADAN AYARLANIR */
-    font-size: 18px; 
-    font-weight: bold;
+    /* ÖNEMLİ: Kutu boyutunu sabit tutan ayarlar */
+    box-sizing: border-box; 
+    height: 35px; 
+    font-size: 16px; /* Yazı boyutu büyütüldü */
+    width: 100%;
 }
 
-/* TL Yazısının Stili */
-.currency {
-    position: absolute;
-    right: 12px;
-    font-size: 14px;
-    font-weight: bold;
-    color: #444;
-    pointer-events: none; /* Mouse ile seçilmesini engeller */
-}
-
-/* Diğer kutuların (multiplier) bozulmaması için */
 .multiplier-box {
     display: grid; 
     grid-template-columns: repeat(6, 1fr); 
@@ -120,14 +116,14 @@
 .multiplier-box input {
     box-sizing: border-box;
     width: 100%; 
-    height: 30px;
+    height: 30px; /* Sabit yükseklik */
+    padding: 4px 0; 
     border-radius: 4px; 
     border: 3px solid #444; 
     background: #1a1a1a; 
     color: var(--accent); 
     text-align: center; 
-    font-size: 16px; /* Burayı da büyüttük */
-    font-weight: bold;
+    font-size: 15px; /* Yazı boyutu büyütüldü */
 }
         .stats { 
             background: var(--orange); color: #000; padding: 10px; margin: 6px; 
