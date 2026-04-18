@@ -70,12 +70,36 @@
             border-left: 4px solid var(--blue); flex-shrink: 0;
             display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
         }
-        .input-group { display: flex; flex-direction: column; }
-        .input-group label { font-size: 10px; color: var(--accent); font-weight: bold; margin-bottom: 2px; }
-        .modern-input {
-            background: #fff; color: #000; border: 8px solid #444; 
-            padding: 4px; border-radius: 8px; font-size: 10px; 
-            font-weight: bold; text-align: center; height: 35px;
+       .input-group { 
+    display: flex; 
+    flex-direction: column; 
+}
+
+.input-group label { 
+    font-size: 10px; 
+    color: var(--accent); 
+    font-weight: bold; 
+    margin-bottom: 2px; 
+}
+
+.modern-input {
+    /* Kutu boyutlarını sabit tutmak için ekledik */
+    box-sizing: border-box; 
+    
+    background: #fff; 
+    color: #000; 
+    border: 8px solid #444; 
+    padding: 4px; 
+    border-radius: 8px; 
+    font-weight: bold; 
+    text-align: center; 
+    
+    /* Sabit yükseklik */
+    height: 35px; 
+    
+    /* Sadece yazı boyutu büyütüldü (örneğin 16px) */
+    font-size: 16px; 
+}
         }
 
         .multiplier-box {
