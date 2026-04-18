@@ -70,14 +70,7 @@
             border-left: 4px solid var(--blue); flex-shrink: 0;
             display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
         }
-/* Kutuların dış çerçevesini donduruyoruz */
-.input-group { 
-    display: flex; 
-    flex-direction: column; 
-    margin-bottom: 10px;
-}
-
-.input-group { 
+       .input-group { 
     display: flex; 
     flex-direction: column; 
     position: relative;
@@ -101,8 +94,8 @@
     
     /* ÖNEMLİ: Kutu boyutunu sabit tutan ayarlar */
     box-sizing: border-box; 
-    height: 35px; 
-    font-size: 16px; /* Yazı boyutu büyütüldü */
+    height: 40px; 
+    font-size: 20px; /* Yazı boyutu büyütüldü */
     width: 100%;
 }
 
@@ -171,18 +164,15 @@
     <div id="calendarGrid" class="grid"></div>
 </div>
 
-<div class="input-group">
-    <label>MAAŞ</label>
-    <div class="input-wrapper">
-        <input type="number" class="modern-input" placeholder="0 ">
-        <span class="currency">TL</span>
+<div class="salary-panel">
+    <div class="input-group">
+        <label>NET MAAŞ</label>
+        <input type="number" id="salary" class="modern-input" placeholder="0 TL" oninput="calc()">
     </div>
-</div>
-
-<div class="input-group">
-    <label>Maaş</label>
-    <input type="text" class="modern-input" id="maasInput" placeholder="0 TL" onblur="formatTL(this)" onfocus="clearTL(this)">
-</div>
+    <div class="input-group">
+        <label>SAAT ÜCRETİ</label>
+        <input type="number" id="hRate" class="modern-input" placeholder="0 TL" oninput="calc()">
+    </div>
 </div>
 
 <div class="multiplier-box">
