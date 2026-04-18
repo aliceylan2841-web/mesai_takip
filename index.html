@@ -75,28 +75,55 @@
     flex-direction: column; 
 }
 
-.input-group { display: flex; flex-direction: column; }
+.input-group { 
+    display: flex; 
+    flex-direction: column; 
+}
 
-        .input-group label { font-size: 10px; color: var(--accent); font-weight: bold; margin-bottom: 2px; }
+.input-group label { 
+    font-size: 10px; 
+    color: var(--accent); 
+    font-weight: bold; 
+    margin-bottom: 2px; 
+}
 
-        .modern-input {
+.modern-input {
+    background: #fff; 
+    color: #000; 
+    border: 8px solid #444; 
+    padding: 4px; 
+    border-radius: 8px; 
+    font-weight: bold; 
+    text-align: center; 
+    
+    /* Önemli kısımlar */
+    box-sizing: border-box; /* Border ve padding'i 35px'in içine hapseder */
+    height: 35px; 
+    font-size: 16px; /* Burayı dilediğin kadar büyütebilirsin */
+    line-height: 1;  /* Yazının satır yüksekliğini kutuyla uyumlu tutar */
+}
 
-            background: #fff; color: #000; border: 8px solid #444; 
+.multiplier-box {
+    display: grid; 
+    grid-template-columns: repeat(6, 1fr); 
+    gap: 10px; 
+    padding: 0 4px; 
+    flex-shrink: 0;
+}
 
-            padding: 4px; border-radius: 8px; font-size: 10px; 
-
-            font-weight: bold; text-align: center; height: 35px;
-        }
-
-        .multiplier-box {
-            display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; 
-            padding: 0 4px; flex-shrink: 0;
-        }
-        .multiplier-box input {
-            width: 100%; padding: 4px 0; border-radius: 4px; border: 3px solid #444; 
-            background: #1a1a1a; color: var(--accent); text-align: center; font-size: 13px;
-        }
-
+.multiplier-box input {
+    width: 100%; 
+    padding: 4px 0; 
+    border-radius: 4px; 
+    border: 3px solid #444; 
+    background: #1a1a1a; 
+    color: var(--accent); 
+    text-align: center; 
+    
+    /* Önemli kısımlar */
+    box-sizing: border-box;
+    font-size: 18px; /* Orijinal 13px idi, burayı büyüttük */
+}
         .stats { 
             background: var(--orange); color: #000; padding: 10px; margin: 6px; 
             border-radius: 10px; text-align: center; flex-shrink: 0;
