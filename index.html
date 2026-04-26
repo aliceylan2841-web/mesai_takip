@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Mesai Takip Pro v9.7</title>
+    <title>Mesai Takip Pro v9.9</title>
     <style>
         :root { 
             --primary: #4834d4; 
             --accent: #00d2d3;
-            --bg: #f8f9fa; 
+            --bg: #f5f6fa; 
             --card-bg: #ffffff;
             --text-main: #2d3436;
             --text-dim: #636e72;
@@ -25,114 +25,108 @@
             display: flex; flex-direction: column; overflow: hidden;
         }
 
+        /* HEADER */
         .header-brand { 
             display: flex; align-items: center; justify-content: space-between; 
-            padding: 5px 15px; background: var(--card-bg); box-shadow: 0 1px 5px rgba(0,0,0,0.05);
+            padding: 10px 15px; background: var(--card-bg); box-shadow: 0 1px 5px rgba(0,0,0,0.05);
         }
-        .app-logo { height: 40px; width: 40px; border-radius: 8px; }
-        .app-title { font-size: 13px; font-weight: 800; color: var(--primary); }
-        .info-trigger { background: var(--primary); color: white; border: none; width: 24px; height: 24px; border-radius: 50%; font-weight: bold; font-size: 12px; }
+        .app-logo { height: 42px; width: 42px; border-radius: 8px; }
+        .app-title { font-size: 14px; font-weight: 900; color: var(--primary); }
 
+        /* MODES */
         .mode-selector { 
             display: grid; grid-template-columns: repeat(6, 1fr); gap: 4px; 
-            padding: 6px 10px; background: var(--card-bg);
+            padding: 8px 12px; background: #fff;
         }
         .mode-btn { 
-            padding: 10px 0; border-radius: 6px; background: #f1f2f6; 
-            color: var(--text-dim); font-size: 12px; font-weight: bold; 
+            padding: 7px 0; border-radius: 6px; background: #f1f2f6; 
+            color: var(--text-dim); font-size: 10px; font-weight: bold; 
             text-align: center; border: 1px solid #dfe6e9;
         }
         .mode-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
 
-        .nav { display: flex; justify-content: space-between; align-items: center; padding: 2px 15px; }
-        .btn-nav { color: var(--primary); font-weight: bold; padding: 8px; font-size: 12px; }
-        #monthLabel { font-weight: 800; font-size: 18px; color: var(--text-main); }
+        .nav { display: flex; justify-content: space-between; align-items: center; padding: 4px 15px; }
+        .btn-nav { color: var(--primary); font-weight: bold; padding: 4px 10px; font-size: 18px; }
+        #monthLabel { font-weight: 800; font-size: 13px; }
 
-        /* TAKVİM KUTUCUKLARI KÜÇÜLTÜLDÜ */
-        .calendar-container { padding: 0 8px; flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+        /* TAKVİM - KOMPAKT HALE GETİRİLDİ */
+        .calendar-container { padding: 0 10px; flex: 0 0 auto; }
         .calendar-card {
             background: var(--card-bg); border-radius: 12px; padding: 6px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05); flex: 1; display: flex; flex-direction: column;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
         }
-        .grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; flex: 1; }
-        .grid-header { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; margin-bottom: 2px; }
-        .weekday { text-align: center; font-size: 12px; color: var(--text-dim); font-weight: bold; }
+        .grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; }
+        .weekday { text-align: center; font-size: 9px; color: var(--text-dim); font-weight: bold; padding-bottom: 4px; }
         
         .day { 
-            background: #f8f9fa; border-radius: 5px; position: relative;
+            background: #fdfdfd; border-radius: 5px; position: relative;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            border: 1px solid #f1f2f6; height: 100%; min-height: 20px;
+            border: 1px solid #f1f2f6; height: 42px; /* Dikey boyut düşürüldü */
         }
         
         .day.pazar { color: var(--pazar); background: #fff5f5; }
         .day.holiday { color: var(--tatil); background: #fff0f0; }
-        .day.today { border: 1.5px solid var(--primary); }
-        .day-num { font-weight: 800; font-size: 10px; }
-        .day-info { font-size: 12px; color: var(--success); font-weight: bold; }
+        .day.today { border: 2px solid var(--primary); background: #fff; }
+        .day-num { font-weight: 800; font-size: 12px; }
+        .day-info { font-size: 8px; color: var(--success); font-weight: bold; margin-top: 1px; }
         .day.empty { background: transparent; border: none; }
 
-        /* ALT PANEL AYARLARI */
-        .salary-panel {
-            background: var(--card-bg); margin: 4px 8px; padding: 6px; border-radius: 8px;
-            display: grid; grid-template-columns: 1fr 1fr; gap: 6px;
+        /* ALT PANEL - DAHA GÖRÜNÜR */
+        .bottom-section {
+            flex: 1; display: flex; flex-direction: column; justify-content: space-evenly;
+            padding: 10px 12px;
         }
-        .input-group label { font-size: 10px; color: var(--text-dim); font-weight: 800; margin-bottom: 1px; display: block; }
+
+        .salary-panel {
+            background: var(--card-bg); padding: 12px; border-radius: 12px;
+            display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+        }
+        .input-group label { font-size: 9px; color: var(--text-dim); font-weight: 800; margin-bottom: 4px; display: block; }
         .modern-input {
-            width: 100%; border: 1px solid #f1f2f6; background: #f8f9fa;
-            padding: 4px; border-radius: 5px; font-weight: bold; 
-            text-align: center; font-size: 16px; color: var(--primary);
+            width: 100%; border: 1.5px solid #edf0f2; background: #f8f9fa;
+            padding: 8px; border-radius: 8px; font-weight: bold; 
+            text-align: center; font-size: 15px; color: var(--primary);
         }
 
         .multiplier-box {
-            display: grid; grid-template-columns: repeat(6, 1fr); 
-            gap: 3px; padding: 0 8px; margin-bottom: 4px;
+            display: grid; grid-template-columns: repeat(6, 1fr); gap: 4px;
         }
         .multiplier-box input {
-            width: 100%; height: 22px; border-radius: 4px; border: 1px solid #dfe6e9;
-            text-align: center; font-size: 12px; color: var(--text-dim);
+            width: 100%; height: 28px; border-radius: 5px; border: 1px solid #dfe6e9;
+            text-align: center; font-size: 11px; font-weight: bold; color: var(--text-dim);
         }
 
         .stats { 
-            background: var(--primary); color: #fff; padding: 8px; margin: 0 8px 4px 8px; 
-            border-radius: 10px; text-align: center;
+            background: var(--primary); color: #fff; padding: 12px; 
+            border-radius: 15px; text-align: center;
         }
-        .sums-line { font-size: 12px; opacity: 0.8; margin-bottom: 2px; }
-        .mesai-line { font-size: 16px; margin-bottom: 1px; font-weight: bold; }
-        .total-line { font-size: 20px; font-weight: 900; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 2px; }
+        .sums-line { font-size: 14px; opacity: 0.8; margin-bottom: 4px; }
+        .mesai-line { font-size: 18px; margin-bottom: 2px; }
+        .total-line { font-size: 24px; font-weight: 900; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 4px; }
 
         .save-btn { 
-            background: var(--success); color: white; width: calc(100% - 16px); 
-            padding: 8px; border: none; border-radius: 8px; font-weight: bold; 
-            margin: 0 8px 6px 8px; font-size: 12px;
+            background: var(--success); color: white; width: 100%; 
+            padding: 14px; border: none; border-radius: 12px; font-weight: bold; 
+            font-size: 14px; box-shadow: 0 4px 10px rgba(106, 176, 76, 0.2);
         }
 
         .clear-btn { 
-            position: absolute; top: -2px; right: -2px; 
+            position: absolute; top: -3px; right: -3px; 
             background: var(--tatil); color: white; border-radius: 50%; 
-            width: 12px; height: 12px; border: 1px solid #fff;
-            display: flex; align-items: center; justify-content: center; font-size: 7px;
+            width: 14px; height: 14px; border: 1.5px solid #fff;
+            display: flex; align-items: center; justify-content: center; font-size: 8px;
         }
-
-        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(2px); }
-        .modal-content { background: #fff; margin: 20% auto; padding: 15px; width: 75%; border-radius: 12px; text-align: center; }
     </style>
 </head>
 <body>
 
-<div id="infoModal" class="modal">
-    <div class="modal-content">
-        <h3 style="color:var(--primary); font-size:16px; margin-bottom:8px;">ℹ️ Bilgi</h3>
-        <p style="font-size:12px; color:var(--text-dim);">Oran seçip güne tıklayın. Kaydet butonuyla verileri dâhili hafızaya alın.</p>
-        <button onclick="toggleModal()" style="background:var(--primary); color:white; border:none; padding:8px; width:100%; border-radius:6px; margin-top:10px;">ANLADIM</button>
-    </div>
-</div>
-
 <div class="header-brand">
-    <div style="display:flex; align-items:center; gap:6px;">
+    <div style="display:flex; align-items:center; gap:10px;">
         <img src="https://i.ibb.co/DFkxCCC/file-00000000d6d4720a84a62a8e60923d43.png" alt="Logo" class="app-logo">
         <span class="app-title">MESAİ TAKİP <span style="color:var(--accent)">PRO</span></span>
     </div>
-    <button class="info-trigger" onclick="toggleModal()">?</button>
+    <div style="background:var(--primary); color:white; width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:bold; font-size:14px;">?</div>
 </div>
 
 <div class="mode-selector">
@@ -146,13 +140,13 @@
 
 <div class="nav">
     <div class="btn-nav" onclick="changeMonth(-1)">❮</div>
-    <div id="monthLabel">YÜKLENİYOR...</div>
+    <div id="monthLabel">OCAK 2024</div>
     <div class="btn-nav" onclick="changeMonth(1)">❯</div>
 </div>
 
 <div class="calendar-container">
     <div class="calendar-card">
-        <div class="grid-header">
+        <div class="grid" style="margin-bottom:4px;">
             <div class="weekday">PT</div><div class="weekday">SA</div><div class="weekday">ÇA</div>
             <div class="weekday">PE</div><div class="weekday">CU</div><div class="weekday">CT</div><div class="weekday">PA</div>
         </div>
@@ -160,52 +154,59 @@
     </div>
 </div>
 
-<div class="salary-panel">
-    <div class="input-group">
-        <label>NET MAAŞ</label>
-        <input type="number" id="salary" class="modern-input" placeholder="₺" oninput="calc()">
+<div class="bottom-section">
+    <div class="salary-panel">
+        <div class="input-group">
+            <label>NET MAAŞ</label>
+            <input type="number" id="salary" class="modern-input" placeholder="₺ 0" oninput="calc()">
+        </div>
+        <div class="input-group">
+            <label>SAAT ÜCRETİ</label>
+            <input type="number" id="hRate" class="modern-input" placeholder="₺ 0" oninput="calc()">
+        </div>
     </div>
-    <div class="input-group">
-        <label>SAAT ÜCRETİ</label>
-        <input type="number" id="hRate" class="modern-input" placeholder="₺" oninput="calc()">
+
+    <div class="multiplier-box">
+        <input type="number" id="c50" value="1.5" step="0.05" oninput="calc()">
+        <input type="number" id="c65" value="1.65" step="0.05" oninput="calc()">
+        <input type="number" id="c75" value="1.75" step="0.05" oninput="calc()">
+        <input type="number" id="c100" value="2.0" step="0.05" oninput="calc()">
+        <input type="number" id="c200" value="3.0" step="0.05" oninput="calc()">
+        <input type="number" id="cX" value="2.5" oninput="calc()">
     </div>
-</div>
 
-<div class="multiplier-box">
-    <input type="number" id="c50" value="1.5" step="0.05" oninput="calc()">
-    <input type="number" id="c65" value="1.65" step="0.05" oninput="calc()">
-    <input type="number" id="c75" value="1.75" step="0.05" oninput="calc()">
-    <input type="number" id="c100" value="2.0" step="0.05" oninput="calc()">
-    <input type="number" id="c200" value="3.0" step="0.05" oninput="calc()">
-    <input type="number" id="cX" value="2.5" oninput="calc()">
-</div>
+    <div class="stats">
+        <div id="sums" class="sums-line">Saatler: 0 | 0 | 0 | 0 | 0 | 0</div>
+        <div class="mesai-line">Mesai Kazancı: <span id="pureMesai">0</span> ₺</div>
+        <div class="total-line"><span style="font-size: 13px; font-weight: normal; opacity: 0.9;">TOPLAM:</span> <span id="totalFinal">0</span> ₺</div>
+    </div>
 
-<div class="stats">
-    <div id="sums" class="sums-line">Saat: 0 | 0 | 0 | 0 | 0 | 0</div>
-    <div class="mesai-line">Mesai Kazancı: <span id="pureMesai">0</span> ₺</div>
-    <div class="total-line"><span style="font-size:10px; font-weight:normal;">GENEL TOPLAM:</span> <span id="totalFinal">0</span> ₺</div>
+    <button class="save-btn" onclick="saveAll()">VERİLERİ KAYDET</button>
 </div>
-
-<button class="save-btn" onclick="saveAll()">VERİLERİ KAYDET</button>
 
 <script>
+    // Mantıksal kodlar (Orijinal veritabanı yapısı korundu)
     let m = new Date().getMonth(), y = new Date().getFullYear();
     let data = JSON.parse(localStorage.getItem('mesai_v8_db')) || {};
     let activeMode = 'r50';
     const holidays = ["1-0", "19-2", "20-2", "21-2", "23-3", "1-4", "19-4", "26-4", "27-4", "28-4", "29-4", "15-6", "30-7", "29-9"];
 
-    function toggleModal() { const m = document.getElementById('infoModal'); m.style.display = (m.style.display === 'block') ? 'none' : 'block'; }
-    function setMode(mode) { activeMode = mode; document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active')); document.getElementById('btn' + mode).classList.add('active'); }
+    function setMode(mode) { 
+        activeMode = mode; 
+        document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active')); 
+        document.getElementById('btn' + mode).classList.add('active'); 
+    }
 
     function render() {
         const grid = document.getElementById('calendarGrid');
         grid.innerHTML = '';
-        const names = ["Ocak","Şubat","Mart","Nisan","Mayıs","Haziran","Temmuz","Ağustos","Eylül","Ekim","Kasım","Aralık"];
+        const names = ["OCAK","ŞUBAT","MART","NİSAN","MAYIS","HAZİRAN","TEMMUZ","AĞUSTOS","EYLÜL","EKİM","KASIM","ARALIK"];
         document.getElementById('monthLabel').innerText = names[m] + " " + y;
-        const today = new Date();
+        
         let first = new Date(y, m, 1).getDay();
         first = (first === 0) ? 6 : first - 1;
         let days = new Date(y, m + 1, 0).getDate();
+        const today = new Date();
 
         for(let i=0; i<first; i++) grid.innerHTML += '<div class="day empty"></div>';
 
@@ -215,12 +216,13 @@
             let info = "";
             if(data[key]) {
                 const it = data[key];
-                info = (it.r50||0) + (it.r65||0) + (it.r75||0) + (it.r100||0) + (it.r200||0) + (it.rX||0);
+                let total = (it.r50||0) + (it.r65||0) + (it.r75||0) + (it.r100||0) + (it.r200||0) + (it.rX||0);
+                if(total > 0) info = total + 's';
             }
             grid.innerHTML += `
                 <div class="day ${isPazar?'pazar':''} ${holidays.includes(d+'-'+m)?'holiday':''} ${isToday?'today':''}" onclick="quickEntry(${d})">
                     <span class="day-num">${d}</span>
-                    <div class="day-info">${info > 0 ? info + 's' : ''}</div>
+                    <div class="day-info">${info}</div>
                     ${data[key] ? `<button class="clear-btn" onclick="event.stopPropagation(); clearDay(${d})">×</button>` : ''}
                 </div>`;
         }
@@ -230,11 +232,11 @@
     function quickEntry(d) {
         let key = `${d}-${m}-${y}`;
         if(!data[key]) data[key] = {r50:0, r65:0, r75:0, r100:0, r200:0, rX:0};
-        let val = prompt(`${d} Günü (${activeMode.replace('r','%')}):`, data[key][activeMode] || "");
+        let val = prompt(`${d} Günü Mesai:`, data[key][activeMode] || "");
         if(val !== null) { data[key][activeMode] = parseFloat(val.replace(',', '.')) || 0; render(); }
     }
 
-    function clearDay(d) { if(confirm(`${d} temizlensin mi?`)) { delete data[`${d}-${m}-${y}`]; render(); } }
+    function clearDay(d) { if(confirm(`${d} silinsin mi?`)) { delete data[`${d}-${m}-${y}`]; render(); } }
 
     function calc() {
         let sal = parseFloat(document.getElementById('salary').value) || 0;
@@ -247,7 +249,7 @@
                 t100 += data[k].r100 || 0; t200 += data[k].r200 || 0; tX += data[k].rX || 0;
             }
         }
-        document.getElementById('sums').innerText = `Detay (s): ${t50}|${t65}|${t75}|${t100}|${t200}|${tX}`;
+        document.getElementById('sums').innerText = `Saatler: ${t50}|${t65}|${t75}|${t100}|${t200}|${tX}`;
         let kazanc = (t50*hr*document.getElementById('c50').value) + (t65*hr*document.getElementById('c65').value) + 
                      (t75*hr*document.getElementById('c75').value) + (t100*hr*document.getElementById('c100').value) + 
                      (t200*hr*document.getElementById('c200').value) + (tX*hr*document.getElementById('cX').value);
