@@ -123,6 +123,24 @@ body.dark .ei{background:#1e2130;}
 
 .save-b{background:var(--G);color:#fff;border:none;border-radius:8px;padding:8px;font-weight:800;font-size:12px;font-family:var(--F);width:calc(100% - 16px);margin:0 8px 5px;box-shadow:0 3px 10px rgba(5,150,105,.22);flex-shrink:0;display:block;}
 
+/* GİZLE BUTONU */
+.priv-bar{display:flex;align-items:center;justify-content:flex-end;padding:2px 8px 0;flex-shrink:0;}
+.priv-btn{display:flex;align-items:center;gap:5px;background:var(--CARD);border:1.5px solid var(--BD);border-radius:99px;padding:5px 10px;font-size:10px;font-weight:800;color:var(--TX2);cursor:pointer;box-shadow:var(--SH);transition:all .15s;}
+.priv-btn.hidden-on{border-color:var(--R);color:var(--R);background:var(--RL);}
+.priv-val{font-family:var(--M);letter-spacing:1px;}
+body.priv .sv.g, body.priv .sv.y, body.priv #sSaat,
+body.priv .tv, body.priv .ei, body.priv .di-price{
+  filter:blur(5px);
+  user-select:none;
+  pointer-events:none;
+  transition:filter .2s;
+}
+body:not(.priv) .sv.g, body:not(.priv) .sv.y, body:not(.priv) #sSaat,
+body:not(.priv) .tv, body:not(.priv) .ei, body:not(.priv) .di-price{
+  filter:none;
+  transition:filter .2s;
+}
+
 /* MODAL */
 .ov{position:fixed;inset:0;background:rgba(0,0,0,.45);backdrop-filter:blur(3px);z-index:999;display:none;align-items:flex-end;justify-content:center;}
 .ov.on{display:flex;}
@@ -349,6 +367,12 @@ body.dark .ff input, body.dark .ff select, body.dark .ff textarea{background:#1e
     <div class="li"><div class="ld" style="background:var(--GR)"></div>Ölüm</div>
     <div class="li"><div class="ld" style="background:var(--V)"></div>Sağlık</div>
     <div class="li"><div class="ld" style="background:var(--O)"></div>Evlilik</div>
+  </div>
+  <div class="priv-bar">
+    <div class="priv-btn" id="privBtn" onclick="togglePriv()">
+      <span id="privIc">👁️</span>
+      <span id="privTxt">Ücretleri Gizle</span>
+    </div>
   </div>
   <div class="sa">
     <div class="cw"><div class="cc">
@@ -782,7 +806,15 @@ function renderCal(){
       let earn=dayEarning(ent);
       let inf=document.createElement('div');
       inf.className='di';
-      inf.textContent=totalH+'s'+(earn>0?' ('+f(earn)+'₺)':'');
+      let hourSpan=document.createElement('span');
+      hourSpan.textContent=totalH+'s';
+      inf.appendChild(hourSpan);
+      if(earn>0){
+        let priceSpan=document.createElement('span');
+        priceSpan.className='di-price';
+        priceSpan.textContent=' ('+f(earn)+'₺)';
+        inf.appendChild(priceSpan);
+      }
       div.appendChild(inf);
     } else if(izT){
       let inf=document.createElement('div');
@@ -1281,6 +1313,22 @@ function toast(msg){
   t.style.cssText='position:fixed;bottom:68px;left:50%;transform:translateX(-50%);background:#111827;color:#fff;padding:7px 16px;border-radius:99px;font-size:12px;font-weight:800;z-index:9999;box-shadow:0 4px 16px rgba(0,0,0,.22);';
   t.textContent=msg; document.body.appendChild(t);
   setTimeout(()=>t.remove(),2200);
+}
+
+function togglePriv(){
+  let on=document.body.classList.toggle('priv');
+  let btn=document.getElementById('privBtn');
+  let ic=document.getElementById('privIc');
+  let txt=document.getElementById('privTxt');
+  if(on){
+    btn.classList.add('hidden-on');
+    ic.textContent='🙈';
+    txt.textContent='Ücretleri Göster';
+  } else {
+    btn.classList.remove('hidden-on');
+    ic.textContent='👁️';
+    txt.textContent='Ücretleri Gizle';
+  }
 }
 
 window.onload=function(){
