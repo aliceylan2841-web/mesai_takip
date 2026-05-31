@@ -341,7 +341,7 @@ body.dark .ff input, body.dark .ff select, body.dark .ff textarea{background:#1e
     <div class="hd-ic">⏱️</div>
     <div><div class="hd-t">MESAİ & İZİN <em>PRO</em></div><div class="hd-d" id="hdate">—</div></div>
   </div>
-  <button class="hd-dl" onclick="showQR()">📲 İndir</button>
+
 </div>
 
 <div class="tabs">
@@ -392,9 +392,9 @@ body.dark .ff input, body.dark .ff select, body.dark .ff textarea{background:#1e
     <div class="ex-w"><div class="ex-g">
       <div class="eb"><div class="el">NET MAAŞ (₺)</div><input type="number" id="iMaas" class="ei" placeholder="0" oninput="calcOnly();saveSettingsQuick()"></div>
       <div class="eb"><div class="el">SAAT ÜCRETİ (₺)</div><input type="number" id="iSaatUcr" class="ei" placeholder="Otomatik" oninput="calcOnly();saveSettingsQuick()"></div>
-      <div class="eb"><div class="el">İKRAMİYE (₺)</div><input type="number" id="iIkr" class="ei" placeholder="0" oninput="calcOnly()"></div>
-      <div class="eb"><div class="el">DEVAMLILIK (₺)</div><input type="number" id="iDev" class="ei" placeholder="0" oninput="calcOnly()"></div>
-      <div class="eb" style="grid-column: span 2;"><div class="el">DİĞER (₺)</div><input type="number" id="iDig" class="ei" placeholder="0" oninput="calcOnly()"></div>
+      <div class="eb"><div class="el">İKRAMİYE (₺)</div><input type="number" id="iIkr" class="ei" placeholder="0" oninput="saveMonthExtra('iIkr');calcOnly()"></div>
+      <div class="eb"><div class="el">DEVAMLILIK (₺)</div><input type="number" id="iDev" class="ei" placeholder="0" oninput="saveMonthExtra('iDev');calcOnly()"></div>
+      <div class="eb" style="grid-column: span 2;"><div class="el">DİĞER (₺)</div><input type="number" id="iDig" class="ei" placeholder="0" oninput="saveMonthExtra('iDig');calcOnly()"></div>
     </div></div>
     <div class="tr">
       <div class="tb p"><div class="tl">MAAŞ</div><div class="tv" id="tM">0₺</div></div>
@@ -527,10 +527,11 @@ body.dark .ff input, body.dark .ff select, body.dark .ff textarea{background:#1e
           <div class="ff"><label>SAAT ÜCRETİ (₺)</div><input type="number" id="sSaatS" class="settings-input" placeholder="Otomatik" oninput="syncSaatS()"></div>
         </div>
         <div class="fr">
-          <div class="ff"><label>İKRAMİYE (₺)</label><input type="number" id="sIkrS" class="settings-input" placeholder="0"></div>
-          <div class="ff"><label>DEVAMLILIK (₺)</label><input type="number" id="sDevS" class="settings-input" placeholder="0"></div>
+          <div class="ff"><label>İKRAMİYE VARSAYILAN (₺)</label><input type="number" id="sIkrS" class="settings-input" placeholder="0"></div>
+          <div class="ff"><label>DEVAMLILIK VARSAYILAN (₺)</label><input type="number" id="sDevS" class="settings-input" placeholder="0"></div>
         </div>
-        <div class="ff"><label>DİĞER GELİR (₺)</label><input type="number" id="sDigS" class="settings-input" placeholder="0"></div>
+        <div class="ff"><label>DİĞER GELİR VARSAYILAN (₺)</label><input type="number" id="sDigS" class="settings-input" placeholder="0"></div>
+        <div style="font-size:9px;color:var(--TX2);font-weight:700;padding:5px 8px;background:var(--BG);border-radius:6px;">💡 Varsayılan değerler: Her yeni ay için otomatik doldurulur. O ay farklı bir değer girerseniz, ayarlardaki değer geçersiz olur ve girdiğiniz değer kaydedilir.</div>
       </div>
     </div>
 
@@ -680,13 +681,6 @@ body.dark .ff input, body.dark .ff select, body.dark .ff textarea{background:#1e
   </div>
 </div>
 
-<div class="ov" id="ovQR">
-  <div class="mb">
-    <div class="mh"></div>
-    <div class="mt">📲 Telefona İndir</div>
-    <div class="qrbox">
-      <canvas id="qrCanvas"></canvas>
-      <div class="qr-inf">QR kodu kamera uygulamanızla okutun.<br>Açılan sayfayı <b>"Paylaş → Dosyalara Kaydet"</b> ile indirin.</div>
     </div>
     <button class="bc" style="width:100%;margin-top:10px;" onclick="hide('ovQR')">Kapat</button>
   </div>
@@ -744,6 +738,31 @@ function dayEarning(ent){
   return (ent.r50||0)*_c.hr*_c.c50+(ent.r65||0)*_c.hr*_c.c65+
          (ent.r75||0)*_c.hr*_c.c75+(ent.r100||0)*_c.hr*_c.c100+
          (ent.r200||0)*_c.hr*_c.c200+(ent.rX||0)*_c.hr*_c.cX;
+}
+function getMonthKey(m,y){return `${m}_${y}`;}
+function loadMonthExtras(){
+  // İkramiye, devamlılık, diğer — aya özel yükle
+  let mk=getMonthKey(Cm,Cy);
+  ['iIkr','iDev','iDig'].forEach(id=>{
+    let stored=localStorage.getItem('mp11b_'+id+'_'+mk);
+    let el=document.getElementById(id);
+    if(stored!==null){
+      el.value=stored;
+    } else {
+      // Ayarlar'da tanımlı sabit değer varsa onu yükle
+      let settingsVal=id==='iIkr'?SETTINGS.ikr:id==='iDev'?SETTINGS.dev:SETTINGS.dig;
+      el.value=settingsVal||'';
+    }
+  });
+}
+function saveMonthExtra(id){
+  let mk=getMonthKey(Cm,Cy);
+  let val=document.getElementById(id).value;
+  if(val===''||val===null){
+    localStorage.removeItem('mp11b_'+id+'_'+mk);
+  } else {
+    localStorage.setItem('mp11b_'+id+'_'+mk, val);
+  }
 }
 function calcOnly(){
   getC();
@@ -852,7 +871,7 @@ function renderDagil(){
   if(!frag.childElementCount){el.innerHTML='<div style="font-size:9px;color:var(--TX2);font-weight:700;">Mesai girişi yok</div>';return;}
   el.innerHTML=''; el.appendChild(frag);
 }
-function CM(d){Cm+=d;if(Cm>11){Cm=0;Cy++;}if(Cm<0){Cm=11;Cy--;}renderCal();}
+function CM(d){Cm+=d;if(Cm>11){Cm=0;Cy++;}if(Cm<0){Cm=11;Cy--;}loadMonthExtras();renderCal();}
 function delDay(d){if(confirm(`${d} ${MN[Cm]} silinsin mi?`)){delete DB[`${d}-${Cm}-${Cy}`];renderCal();}}
 
 function openDay(d){
@@ -1228,12 +1247,18 @@ function saveSettings(){
   SETTINGS.ikr=parseFloat(document.getElementById('sIkrS').value)||0;
   SETTINGS.dev=parseFloat(document.getElementById('sDevS').value)||0;
   SETTINGS.dig=parseFloat(document.getElementById('sDigS').value)||0;
-  // Sync mali to mesai page
+  // Sync mali to mesai page (sadece maaş ve saat ücreti, aya özel olanlar hariç)
   if(SETTINGS.maas) document.getElementById('iMaas').value=SETTINGS.maas;
   if(SETTINGS.saat) document.getElementById('iSaatUcr').value=SETTINGS.saat;
-  if(SETTINGS.ikr) document.getElementById('iIkr').value=SETTINGS.ikr;
-  if(SETTINGS.dev) document.getElementById('iDev').value=SETTINGS.dev;
-  if(SETTINGS.dig) document.getElementById('iDig').value=SETTINGS.dig;
+  // ikr/dev/dig: sadece bu ay için kayıt yoksa ayarlar değerini uygula
+  ['iIkr','iDev','iDig'].forEach(id=>{
+    let mk=getMonthKey(Cm,Cy);
+    let stored=localStorage.getItem('mp11b_'+id+'_'+mk);
+    if(stored===null){
+      let settingsVal=id==='iIkr'?SETTINGS.ikr:id==='iDev'?SETTINGS.dev:SETTINGS.dig;
+      if(settingsVal) document.getElementById(id).value=settingsVal;
+    }
+  });
   saveSettingsData();
   calcOnly();
   toast('✅ Ayarlar kaydedildi');
@@ -1298,10 +1323,12 @@ function renderHakListMini(i){
 // ══════ SAVE / LOAD ══════
 function saveAll(){
   localStorage.setItem('mp11b',JSON.stringify(DB));
-  ['iMaas','iSaatUcr','iIkr','iDev','iDig'].forEach(id=>{
+  ['iMaas','iSaatUcr'].forEach(id=>{
     let el=document.getElementById(id);
     if(el) localStorage.setItem('mp11b_'+id, el.value);
   });
+  // aya özel alanları kaydet
+  ['iIkr','iDev','iDig'].forEach(id=>saveMonthExtra(id));
   saveSettingsData();
   toast('✅ Kaydedildi');
 }
@@ -1333,16 +1360,15 @@ function togglePriv(){
 
 window.onload=function(){
   // load mali from old storage
-  ['iMaas','iSaatUcr','iIkr','iDev','iDig'].forEach(id=>{
+  ['iMaas','iSaatUcr'].forEach(id=>{
     let v=localStorage.getItem('mp11b_'+id);
     if(v) document.getElementById(id).value=v;
   });
-  // load from settings
+  // load from settings (maaş ve saat)
   if(SETTINGS.maas&&!document.getElementById('iMaas').value) document.getElementById('iMaas').value=SETTINGS.maas;
   if(SETTINGS.saat&&!document.getElementById('iSaatUcr').value) document.getElementById('iSaatUcr').value=SETTINGS.saat;
-  if(SETTINGS.ikr&&!document.getElementById('iIkr').value) document.getElementById('iIkr').value=SETTINGS.ikr;
-  if(SETTINGS.dev&&!document.getElementById('iDev').value) document.getElementById('iDev').value=SETTINGS.dev;
-  if(SETTINGS.dig&&!document.getElementById('iDig').value) document.getElementById('iDig').value=SETTINGS.dig;
+  // aya özel ikr/dev/dig yükle
+  loadMonthExtras();
 
   // apply dark mode
   applyDark();
