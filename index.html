@@ -3,7 +3,24 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Mesai & İzin Pro</title>
+<title>Mesai Takip</title>
+
+<!-- PWA -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#1a56db">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Mesai Takip">
+<link rel="apple-touch-icon" href="icons/icon-192x192.png">
+<link rel="apple-touch-icon" sizes="152x152" href="icons/icon-152x152.png">
+<link rel="apple-touch-icon" sizes="144x144" href="icons/icon-144x144.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192x192.png">
+
+<!-- SEO / Store -->
+<meta name="description" content="Mesai, izin ve maaş takip uygulaması. Günlük mesai girişi, izin takibi, otomatik hesaplama.">
+<meta name="keywords" content="mesai takip, izin takip, maaş hesaplama, çalışan takip">
+<meta name="author" content="Acamay">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap');
 :root{
@@ -341,7 +358,6 @@ body.dark .ff input, body.dark .ff select, body.dark .ff textarea{background:#1e
     <div class="hd-ic">⏱️</div>
     <div><div class="hd-t">MESAİ & İZİN <em>PRO</em></div><div class="hd-d" id="hdate">—</div></div>
   </div>
-
 </div>
 
 <div class="tabs">
@@ -679,10 +695,6 @@ body.dark .ff input, body.dark .ff select, body.dark .ff textarea{background:#1e
       <button class="bs" onclick="savePlanIzin()">Ekle</button>
     </div>
   </div>
-</div>
-
-    </div>
-    <button class="bc" style="width:100%;margin-top:10px;" onclick="hide('ovQR')">Kapat</button>
   </div>
 </div>
 
@@ -1378,6 +1390,16 @@ window.onload=function(){
   document.getElementById('hdate').textContent=now.toLocaleDateString('tr-TR',{weekday:'long',day:'2-digit',month:'long'});
   renderCal();
 };
+</script>
+<!-- PWA Service Worker -->
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js')
+      .then(reg => console.log('SW kayıtlı:', reg.scope))
+      .catch(err => console.log('SW hatası:', err));
+  });
+}
 </script>
 </body>
 </html>
