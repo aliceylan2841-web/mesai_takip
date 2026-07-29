@@ -3,24 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Mesai Takip</title>
-
-<!-- PWA -->
-<link rel="manifest" href="/mesai_takip/manifest.json">
-<meta name="theme-color" content="#1a56db">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Mesai Takip">
-<link rel="apple-touch-icon" href="/mesai_takip/icon-192x192.png">
-<link rel="apple-touch-icon" sizes="152x152" href="/mesai_takip/icon-152x152.png">
-<link rel="apple-touch-icon" sizes="144x144" href="/mesai_takip/icon-144x144.png">
-<link rel="icon" type="image/png" sizes="192x192" href="/mesai_takip/icon-192x192.png">
-
-<!-- SEO / Store -->
-<meta name="description" content="Mesai, izin ve maaş takip uygulaması. Günlük mesai girişi, izin takibi, otomatik hesaplama.">
-<meta name="keywords" content="mesai takip, izin takip, maaş hesaplama, çalışan takip">
-<meta name="author" content="Acamay">
+<title>Mesai & İzin Pro</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap');
 :root{
@@ -97,7 +80,7 @@ body.dark .d.col{background:#1e2130;}
 .d.csa{border-color:var(--V);background:var(--VL);}
 .d.cev{border-color:var(--O);background:var(--OL);}
 .dn{font-weight:900;font-size:11px;line-height:1;}
-.di{font-size:6.5px;font-weight:800;color:var(--G);line-height:1;margin-top:1px;text-align:center;}
+.di{font-size:2px;font-weight:800;color:var(--G);line-height:1;margin-top:1px;text-align:center;}
 .diz{font-size:9px;line-height:1;margin-top:1px;}
 .xb{position:absolute;top:-4px;right:-4px;background:var(--R);color:#fff;border-radius:50%;width:13px;height:13px;display:flex;align-items:center;justify-content:center;font-size:7px;font-weight:900;border:1.5px solid #fff;z-index:5;}
 
@@ -349,22 +332,88 @@ body.dark .ff input, body.dark .ff select, body.dark .ff textarea{background:#1e
 .pn{font-weight:800;color:var(--TX);font-size:11px;}
 .pb{padding:2px 6px;border-radius:99px;font-size:9px;font-weight:800;display:inline-block;}
 .bo{background:var(--GL);color:var(--G);}.bw{background:var(--YL);color:var(--Y);}.br{background:var(--RL);color:var(--R);}
+
+/* ═══════ KİLİT EKRANI (PIN) ═══════ */
+#lockScreen{position:fixed;inset:0;background:linear-gradient(160deg,var(--P2),var(--P) 55%,var(--AC));z-index:5000;display:none;flex-direction:column;align-items:center;justify-content:center;color:#fff;padding:20px;}
+.lock-ic{width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;font-size:28px;margin-bottom:14px;}
+.lock-title{font-size:15px;font-weight:900;margin-bottom:2px;}
+.lock-sub{font-size:11px;opacity:.8;font-weight:600;margin-bottom:20px;}
+#pinDots{display:flex;gap:12px;margin-bottom:24px;}
+.pdot{width:14px;height:14px;border-radius:50%;border:2px solid rgba(255,255,255,.6);}
+.pdot.fill{background:#fff;}
+#pinErr{color:#fca5a5;font-size:11px;font-weight:800;margin:-16px 0 12px;display:none;}
+.pinpad{display:grid;grid-template-columns:repeat(3,64px);gap:12px;}
+.pkey{width:64px;height:64px;border-radius:50%;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);color:#fff;font-size:20px;font-weight:800;display:flex;align-items:center;justify-content:center;}
+.pkey:active{background:rgba(255,255,255,.3);}
+.pkey.ghost{background:transparent;border:none;}
+
+/* ═══════ PERSONEL (STAFF) BAR ═══════ */
+.staff-bar{display:flex;gap:6px;padding:6px 8px;overflow-x:auto;background:var(--CARD);border-bottom:1px solid var(--BD);flex-shrink:0;-webkit-overflow-scrolling:touch;}
+.staff-chip{display:flex;align-items:center;gap:5px;padding:5px 9px;border-radius:99px;border:1.5px solid var(--BD);font-size:10px;font-weight:800;color:var(--TX2);white-space:nowrap;flex-shrink:0;}
+.staff-chip.on{border-color:var(--sc,var(--P));color:var(--TX);background:var(--PL);}
+.staff-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+.staff-del{color:var(--R);font-weight:900;margin-left:2px;}
+.staff-add{color:var(--P);border-color:var(--P);border-style:dashed;}
+
+/* ═══════ DASHBOARD ═══════ */
+.dash-card{background:var(--CARD);border-radius:12px;padding:12px;margin-bottom:10px;box-shadow:var(--SH);border:1px solid var(--BD);}
+.dash-title{font-size:12px;font-weight:900;color:var(--TX);margin-bottom:8px;display:flex;align-items:center;justify-content:space-between;}
+.dash-seg{display:flex;gap:5px;}
+.dash-seg-b{padding:4px 9px;border-radius:99px;font-size:9px;font-weight:800;border:1.5px solid var(--BD);color:var(--TX2);}
+.dash-seg-b.on{background:var(--P);color:#fff;border-color:var(--P);}
+.dash-kpi-row{display:grid;grid-template-columns:repeat(2,1fr);gap:6px;margin-bottom:10px;}
+.dash-kpi{border-radius:10px;padding:9px;color:#fff;}
+.dash-kpi-l{font-size:8px;opacity:.85;font-weight:700;}
+.dash-kpi-v{font-size:15px;font-weight:900;font-family:var(--M);margin-top:2px;}
+.dash-export-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;}
+.dash-export-btn{display:flex;align-items:center;justify-content:center;gap:6px;padding:10px;border-radius:10px;font-weight:800;font-size:12px;border:none;color:#fff;}
+.dash-export-btn.pdf{background:linear-gradient(135deg,#b91c1c,#dc2626);}
+.dash-export-btn.xls{background:linear-gradient(135deg,#065f46,#059669);}
+.dash-backup-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.dash-backup-btn{display:flex;align-items:center;justify-content:center;gap:6px;padding:10px;border-radius:10px;font-weight:800;font-size:12px;border:1.5px solid var(--BD);background:var(--BG);color:var(--TX);}
+
+/* ═══════ EK: bildirim/PIN/GPS/foto satırları için ayarlar ═══════ */
+.pin-set-row{display:flex;gap:8px;align-items:center;}
+.pin-set-input{width:70px;text-align:center;letter-spacing:3px;}
+.gps-btn{display:flex;align-items:center;justify-content:center;gap:6px;background:var(--BG);border:1.5px solid var(--BD);border-radius:9px;padding:8px;font-weight:800;font-size:11px;color:var(--TX);margin-top:6px;width:100%;}
+.gps-btn.ok{border-color:var(--G);color:var(--G);background:var(--GL);}
+.photo-thumb-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px;}
+.photo-thumb{width:52px;height:52px;border-radius:8px;object-fit:cover;border:1px solid var(--BD);}
+.photo-thumb-wrap{position:relative;}
+.photo-thumb-del{position:absolute;top:-4px;right:-4px;background:var(--R);color:#fff;border-radius:50%;width:15px;height:15px;font-size:9px;display:flex;align-items:center;justify-content:center;}
 </style>
 </head>
 <body>
+
+<div id="lockScreen">
+  <div class="lock-ic">🔒</div>
+  <div class="lock-title">Kilitli</div>
+  <div class="lock-sub">Devam etmek için PIN girin</div>
+  <div id="pinDots"><div class="pdot"></div><div class="pdot"></div><div class="pdot"></div><div class="pdot"></div></div>
+  <div id="pinErr">Yanlış PIN, tekrar deneyin</div>
+  <div class="pinpad">
+    <div class="pkey" onclick="pinPress('1')">1</div><div class="pkey" onclick="pinPress('2')">2</div><div class="pkey" onclick="pinPress('3')">3</div>
+    <div class="pkey" onclick="pinPress('4')">4</div><div class="pkey" onclick="pinPress('5')">5</div><div class="pkey" onclick="pinPress('6')">6</div>
+    <div class="pkey" onclick="pinPress('7')">7</div><div class="pkey" onclick="pinPress('8')">8</div><div class="pkey" onclick="pinPress('9')">9</div>
+    <div class="pkey ghost"></div><div class="pkey" onclick="pinPress('0')">0</div><div class="pkey" onclick="pinBack()">⌫</div>
+  </div>
+</div>
 
 <div class="hd">
   <div class="hd-l">
     <div class="hd-ic">⏱️</div>
     <div><div class="hd-t">MESAİ & İZİN <em>PRO</em></div><div class="hd-d" id="hdate">—</div></div>
   </div>
-  
+
 </div>
+
+<div class="staff-bar" id="staffBar"></div>
 
 <div class="tabs">
   <div class="tab on" onclick="ST('m')" id="tab-m"><span class="ic">📆</span>MESAİ</div>
+  <div class="tab" onclick="ST('d')" id="tab-d"><span class="ic">📊</span>DASHBOARD</div>
   <div class="tab" onclick="ST('i')" id="tab-i"><span class="ic">📋</span>İZİN TAKİP</div>
-  <div class="tab" onclick="ST('p')" id="tab-p"><span class="ic">📊</span>YILLIK PLAN</div>
+  <div class="tab" onclick="ST('p')" id="tab-p"><span class="ic">📈</span>YILLIK PLAN</div>
   <div class="tab" onclick="ST('k')" id="tab-k"><span class="ic">📖</span>KILAVUZ</div>
   <div class="tab" onclick="ST('s')" id="tab-s"><span class="ic">⚙️</span>AYARLAR</div>
 </div>
@@ -421,6 +470,54 @@ body.dark .ff input, body.dark .ff select, body.dark .ff textarea{background:#1e
       <div class="tb k"><div class="tl">TOPLAM</div><div class="tv" id="tGen">0₺</div></div>
     </div>
     <button class="save-b" onclick="saveAll()">💾 KAYDET</button>
+  </div>
+</div>
+
+<!-- ══════════ DASHBOARD ══════════ -->
+<div class="pg" id="pg-d">
+  <div class="phd">
+    <h2>📊 Dashboard</h2>
+    <p>Günlük, aylık ve yıllık genel görünüm</p>
+  </div>
+  <div class="sa">
+    <div class="dash-kpi-row">
+      <div class="dash-kpi" style="background:linear-gradient(135deg,var(--P2),var(--P))"><div class="dash-kpi-l">BU AY MESAİ SAATİ</div><div class="dash-kpi-v" id="dkSaat">0s</div></div>
+      <div class="dash-kpi" style="background:linear-gradient(135deg,#065f46,var(--G))"><div class="dash-kpi-l">BU AY MESAİ KAZANCI</div><div class="dash-kpi-v" id="dkKaz">0₺</div></div>
+      <div class="dash-kpi" style="background:linear-gradient(135deg,#92400e,var(--Y))"><div class="dash-kpi-l">BU AY İZİN GÜNÜ</div><div class="dash-kpi-v" id="dkIzin">0</div></div>
+      <div class="dash-kpi" style="background:linear-gradient(135deg,#4c1d95,var(--V))"><div class="dash-kpi-l">YILLIK TOPLAM KAZANÇ</div><div class="dash-kpi-v" id="dkYil">0₺</div></div>
+    </div>
+
+    <div class="dash-card">
+      <div class="dash-title">Günlük Mesai Saatleri (Bu Ay)
+        <span class="dash-seg"><span class="dash-seg-b on" id="dsegD">GÜN</span></span>
+      </div>
+      <canvas id="chartDaily" height="120"></canvas>
+    </div>
+
+    <div class="dash-card">
+      <div class="dash-title">Aylık Toplam Kazanç (Bu Yıl)</div>
+      <canvas id="chartMonthly" height="120"></canvas>
+    </div>
+
+    <div class="dash-card">
+      <div class="dash-title">Yıllık Karşılaştırma</div>
+      <canvas id="chartYearly" height="120"></canvas>
+    </div>
+
+    <div class="dash-card">
+      <div class="dash-title">📤 Rapor Dışa Aktar</div>
+      <div class="dash-export-row">
+        <button class="dash-export-btn pdf" onclick="exportPDF()">📄 PDF</button>
+        <button class="dash-export-btn xls" onclick="exportExcel()">📊 Excel</button>
+      </div>
+      <div class="dash-title" style="margin-top:4px;">☁️ Yedekleme (Dışa/İçe Aktar)</div>
+      <div class="dash-backup-row">
+        <button class="dash-backup-btn" onclick="exportBackup()">⬇️ Yedek Al</button>
+        <button class="dash-backup-btn" onclick="document.getElementById('restoreFile').click()">⬆️ Geri Yükle</button>
+      </div>
+      <input type="file" id="restoreFile" accept="application/json" style="display:none" onchange="importBackup(this.files[0])">
+      <div style="font-size:9px;color:var(--TX2);font-weight:600;margin-top:8px;line-height:1.4;">Not: Gerçek zamanlı sunucu tabanlı bulut senkronizasyonu bu ortamda desteklenmiyor. "Yedek Al" verilerinizi bir JSON dosyası olarak indirir; istediğiniz bulut sürücüsüne (Drive, iCloud vb.) siz kaydedebilir, "Geri Yükle" ile aynı cihazda veya başka bir cihazda içe aktarabilirsiniz.</div>
+    </div>
   </div>
 </div>
 
@@ -509,10 +606,10 @@ body.dark .ff input, body.dark .ff select, body.dark .ff textarea{background:#1e
       <div class="gst"><div class="sn">4</div><div><div class="stt">Maaş & Ek Gelir</div><div class="sd">Maaş, ikramiye, devamlılık ve diğer gelirleri girin. Şirket içi ve genel toplam otomatik hesaplanır.</div></div></div>
       <div class="gst"><div class="sn">5</div><div><div class="stt">İzin Takip Grafiği</div><div class="sd">İzin Takip sekmesinde bu ay ve genel grafik otomatik oluşur. İzin nedenine göre detay görürsünüz.</div></div></div>
       <div class="gst"><div class="sn">6</div><div><div class="stt">Yıllık Plan</div><div class="sd">Ayarlar'dan adınızı ve işe giriş tarihinizi girin. Yıllık izin hakkı otomatik hesaplanır.</div></div></div>
-      <div class="gst"><div class="sn">7</div><div><div class="stt">📲 İndir Butonu</div><div class="sd">Sağ üstteki "İndir" butonuyla QR kod oluşturulur. Kameranızla okutun ve dosyayı telefonunuza kaydedin.</div></div></div>
+
     </div>
     <div class="tb2"><div class="tbi">💡</div><div class="tbt">Günü silmek için takvimde köşedeki kırmızı × butonuna dokunun. Tüm veriler cihaza kaydedilir.</div></div>
-    <div class="ver">Mesai & İzin Takip Pro v12.0 · Veriler cihazınızda saklanır</div>
+    <div class="ver">Mesai & İzin Takip Pro v13.0 · Veriler cihazınızda saklanır</div>
   </div>
 </div>
 
@@ -579,6 +676,59 @@ body.dark .ff input, body.dark .ff select, body.dark .ff textarea{background:#1e
           <div class="settings-row-sub">Kaydet sesini kapat</div>
         </div>
         <div class="toggle" id="soundToggle" onclick="toggleSound()"><div class="toggle-ball"></div></div>
+      </div>
+    </div>
+
+    <!-- Güvenlik & Bildirim -->
+    <div class="settings-section">
+      <div class="settings-header"><div class="settings-header-title">🔐 Güvenlik & Bildirimler</div></div>
+      <div class="settings-row">
+        <div class="settings-row-icon">🔢</div>
+        <div class="settings-row-label">
+          PIN Kilidi
+          <div class="settings-row-sub" id="pinStatusSub">Kapalı</div>
+        </div>
+        <div class="pin-set-row">
+          <input type="text" inputmode="numeric" maxlength="4" class="settings-input pin-set-input" id="pinInput" placeholder="4 hane">
+          <button class="plan-info-edit-btn" onclick="setPinFromInput()">Ayarla</button>
+        </div>
+      </div>
+      <div class="settings-row">
+        <div class="settings-row-icon">🔓</div>
+        <div class="settings-row-label">PIN Kilidini Kaldır</div>
+        <button class="plan-info-edit-btn" onclick="clearPinVal();loadSettingsForm();toast('✅ PIN kaldırıldı')">Kaldır</button>
+      </div>
+      <div class="settings-row">
+        <div class="settings-row-icon">🔔</div>
+        <div class="settings-row-label">
+          Bildirimler
+          <div class="settings-row-sub">İzin günü hatırlatmaları (sayfa açıkken)</div>
+        </div>
+        <div class="toggle" id="notifToggle" onclick="requestNotifPerm()"><div class="toggle-ball"></div></div>
+      </div>
+      <div class="settings-row" style="flex-direction:column;align-items:flex-start;">
+        <div style="display:flex;width:100%;align-items:center;gap:10px;">
+          <div class="settings-row-icon">📍</div>
+          <div class="settings-row-label">GPS Destekli Mesai Girişi</div>
+        </div>
+        <button class="gps-btn" id="gpsBtn" onclick="gpsCheckIn()">📍 GPS ile Giriş Kaydet</button>
+      </div>
+      <div class="settings-row" style="flex-direction:column;align-items:flex-start;">
+        <div style="display:flex;width:100%;align-items:center;gap:10px;">
+          <div class="settings-row-icon">📷</div>
+          <div class="settings-row-label">Bordro / Belge Ekle</div>
+        </div>
+        <input type="file" accept="image/*,.pdf" multiple style="margin-top:6px;font-size:10px;" onchange="handlePhotoUpload(this,'genel')">
+        <div class="photo-thumb-row" id="photoThumbs"></div>
+      </div>
+    </div>
+
+    <!-- Personel Yönetimi -->
+    <div class="settings-section">
+      <div class="settings-header"><div class="settings-header-title">👥 Personel Profilleri</div></div>
+      <div class="settings-row" style="flex-direction:column;align-items:flex-start;">
+        <div class="settings-row-sub" style="margin-bottom:6px;">Her personel kendi mesai/izin verisini ayrı saklar. Üstteki profil şeridinden geçiş yapabilirsiniz.</div>
+        <button class="plan-add-btn" onclick="addStaff()">➕ Yeni Personel Ekle</button>
       </div>
     </div>
 
@@ -698,19 +848,87 @@ body.dark .ff input, body.dark .ff select, body.dark .ff textarea{background:#1e
   </div>
 </div>
 
+    </div>
+ 
   </div>
 </div>
 
 <script>
+// ══════ ÇOKLU PERSONEL (PROFİL) SİSTEMİ ══════
+let STAFF_LIST=JSON.parse(localStorage.getItem('mp_staff_list'))||[{id:'default',name:'Ben',color:'#1a56db'}];
+let ACTIVE_PROFILE=localStorage.getItem('mp_active_profile')||'default';
+if(!STAFF_LIST.find(s=>s.id===ACTIVE_PROFILE)) ACTIVE_PROFILE='default';
+function K(base){ return ACTIVE_PROFILE==='default' ? base : base+'__'+ACTIVE_PROFILE; }
+function saveStaffList(){ localStorage.setItem('mp_staff_list',JSON.stringify(STAFF_LIST)); }
+function switchProfile(id){
+  ACTIVE_PROFILE=id;
+  localStorage.setItem('mp_active_profile',id);
+  location.reload();
+}
+function addStaff(){
+  let name=prompt('Yeni personel adı:');
+  if(!name||!name.trim()) return;
+  let id='s'+Date.now();
+  STAFF_LIST.push({id,name:name.trim(),color:['#1a56db','#059669','#b45309','#6d28d9','#be185d','#c2410c'][STAFF_LIST.length%6]});
+  saveStaffList();
+  renderStaffBar();
+  toast('✅ '+name.trim()+' eklendi');
+}
+function delStaff(id){
+  if(id==='default'){toast('⚠️ Varsayılan profil silinemez');return;}
+  if(!confirm('Bu personeli ve tüm verilerini silmek istediğinize emin misiniz?')) return;
+  STAFF_LIST=STAFF_LIST.filter(s=>s.id!==id);
+  saveStaffList();
+  if(ACTIVE_PROFILE===id) switchProfile('default'); else renderStaffBar();
+}
+function renderStaffBar(){
+  let el=document.getElementById('staffBar');
+  if(!el) return;
+  let html=STAFF_LIST.map(s=>`<div class="staff-chip ${s.id===ACTIVE_PROFILE?'on':''}" style="--sc:${s.color}" onclick="switchProfile('${s.id}')">
+      <span class="staff-dot" style="background:${s.color}"></span>${s.name}
+      ${s.id!=='default'?`<span class="staff-del" onclick="event.stopPropagation();delStaff('${s.id}')">✕</span>`:''}
+    </div>`).join('');
+  html+=`<div class="staff-chip staff-add" onclick="addStaff()">➕ Ekle</div>`;
+  el.innerHTML=html;
+}
+
+// ══════ PIN KİLİDİ ══════
+function getPin(){ return localStorage.getItem('mp_pin')||''; }
+function setPinVal(pin){ localStorage.setItem('mp_pin',pin); }
+function clearPinVal(){ localStorage.removeItem('mp_pin'); }
+let _pinBuf='';
+function pinPress(d){
+  if(_pinBuf.length>=4) return;
+  _pinBuf+=d;
+  updatePinDots();
+  if(_pinBuf.length===4) checkPin();
+}
+function pinBack(){ _pinBuf=_pinBuf.slice(0,-1); updatePinDots(); }
+function updatePinDots(){
+  document.querySelectorAll('#pinDots .pdot').forEach((el,i)=>el.classList.toggle('fill',i<_pinBuf.length));
+  let err=document.getElementById('pinErr'); if(err) err.style.display='none';
+}
+function checkPin(){
+  if(_pinBuf===getPin()){
+    document.getElementById('lockScreen').style.display='none';
+  } else {
+    document.getElementById('pinErr').style.display='block';
+    setTimeout(()=>{ _pinBuf=''; updatePinDots(); },500);
+  }
+}
+function showLockIfNeeded(){
+  if(getPin()){ document.getElementById('lockScreen').style.display='flex'; }
+}
+
 // ══════ VERİ ══════
 let Cm=new Date().getMonth(), Cy=new Date().getFullYear();
-let DB=JSON.parse(localStorage.getItem('mp11b'))||{};
+let DB=JSON.parse(localStorage.getItem(K('mp11b')))||{};
 let eDay=null, selIzT='yillik';
-let SETTINGS=JSON.parse(localStorage.getItem('mp12_settings'))||{
+let SETTINGS=JSON.parse(localStorage.getItem(K('mp12_settings')))||{
   name:'',meslek:'',dept:'',startDate:'',quota:14,carry:0,
   maas:0,saat:0,ikr:0,dev:0,dig:0,hak:[],dark:false,sound:false
 };
-let PLAN_IZINLER=JSON.parse(localStorage.getItem('mp12_plan'))||[];
+let PLAN_IZINLER=JSON.parse(localStorage.getItem(K('mp12_plan')))||[];
 
 const MN=['OCAK','ŞUBAT','MART','NİSAN','MAYIS','HAZİRAN','TEMMUZ','AĞUSTOS','EYLÜL','EKİM','KASIM','ARALIK'];
 const HOL=new Set(['1-0','19-2','20-2','21-2','23-3','1-4','19-4','26-4','27-4','28-4','29-4','15-6','30-7','29-9']);
@@ -730,6 +948,7 @@ function ST(n){
   if(n==='i') renderIzinChart('ay');
   if(n==='p') renderPlanPage();
   if(n==='s') loadSettingsForm();
+  if(n==='d') renderDashboard();
 }
 
 function show(id){document.getElementById(id).classList.add('on');}
@@ -759,7 +978,7 @@ function loadMonthExtras(){
   // İkramiye, devamlılık, diğer — aya özel yükle
   let mk=getMonthKey(Cm,Cy);
   ['iIkr','iDev','iDig'].forEach(id=>{
-    let stored=localStorage.getItem('mp11b_'+id+'_'+mk);
+    let stored=localStorage.getItem(K('mp11b')+'_'+id+'_'+mk);
     let el=document.getElementById(id);
     if(stored!==null){
       el.value=stored;
@@ -774,9 +993,9 @@ function saveMonthExtra(id){
   let mk=getMonthKey(Cm,Cy);
   let val=document.getElementById(id).value;
   if(val===''||val===null){
-    localStorage.removeItem('mp11b_'+id+'_'+mk);
+    localStorage.removeItem(K('mp11b')+'_'+id+'_'+mk);
   } else {
-    localStorage.setItem('mp11b_'+id+'_'+mk, val);
+    localStorage.setItem(K('mp11b')+'_'+id+'_'+mk, val);
   }
 }
 function calcOnly(){
@@ -1204,13 +1423,13 @@ function savePlanIzin(){
   if(!st){alert('Tarih giriniz');return;}
   let d=en?Math.round((new Date(en)-new Date(st))/(864e5))+1:1;
   PLAN_IZINLER.push({type,start:st,end:en,days:d,note:no});
-  localStorage.setItem('mp12_plan',JSON.stringify(PLAN_IZINLER));
+  localStorage.setItem(K('mp12_plan'),JSON.stringify(PLAN_IZINLER));
   hide('ovPlanIzinEkle');
   renderPlanPage();
 }
 function delPlanIzin(idx){
   PLAN_IZINLER.splice(idx,1);
-  localStorage.setItem('mp12_plan',JSON.stringify(PLAN_IZINLER));
+  localStorage.setItem(K('mp12_plan'),JSON.stringify(PLAN_IZINLER));
   renderPlanPage();
 }
 
@@ -1248,6 +1467,19 @@ function loadSettingsForm(){
   document.getElementById('sDigS').value=s.dig||'';
   if(s.startDate) calcAutoQuota();
   renderHakList();
+  let pinSub=document.getElementById('pinStatusSub');
+  if(pinSub) pinSub.textContent=getPin()?'Açık — cihazda korumalı':'Kapalı';
+  let notifT=document.getElementById('notifToggle');
+  if(notifT) notifT.classList.toggle('on', !!(SETTINGS.notif && 'Notification' in window && Notification.permission==='granted'));
+  renderPhotoThumbs('genel');
+}
+function setPinFromInput(){
+  let v=document.getElementById('pinInput').value.trim();
+  if(!/^[0-9]{4}$/.test(v)){ toast('⚠️ 4 haneli sayısal PIN girin'); return; }
+  setPinVal(v);
+  document.getElementById('pinInput').value='';
+  loadSettingsForm();
+  toast('✅ PIN ayarlandı');
 }
 
 function saveSettings(){
@@ -1268,7 +1500,7 @@ function saveSettings(){
   // ikr/dev/dig: sadece bu ay için kayıt yoksa ayarlar değerini uygula
   ['iIkr','iDev','iDig'].forEach(id=>{
     let mk=getMonthKey(Cm,Cy);
-    let stored=localStorage.getItem('mp11b_'+id+'_'+mk);
+    let stored=localStorage.getItem(K('mp11b')+'_'+id+'_'+mk);
     if(stored===null){
       let settingsVal=id==='iIkr'?SETTINGS.ikr:id==='iDev'?SETTINGS.dev:SETTINGS.dig;
       if(settingsVal) document.getElementById(id).value=settingsVal;
@@ -1284,7 +1516,7 @@ function saveSettingsQuick(){
   saveSettingsData();
 }
 function saveSettingsData(){
-  localStorage.setItem('mp12_settings',JSON.stringify(SETTINGS));
+  localStorage.setItem(K('mp12_settings'),JSON.stringify(SETTINGS));
 }
 
 function toggleDark(){
@@ -1337,10 +1569,10 @@ function renderHakListMini(i){
 
 // ══════ SAVE / LOAD ══════
 function saveAll(){
-  localStorage.setItem('mp11b',JSON.stringify(DB));
+  localStorage.setItem(K('mp11b'),JSON.stringify(DB));
   ['iMaas','iSaatUcr'].forEach(id=>{
     let el=document.getElementById(id);
-    if(el) localStorage.setItem('mp11b_'+id, el.value);
+    if(el) localStorage.setItem(K('mp11b')+'_'+id, el.value);
   });
   // aya özel alanları kaydet
   ['iIkr','iDev','iDig'].forEach(id=>saveMonthExtra(id));
@@ -1373,10 +1605,270 @@ function togglePriv(){
   }
 }
 
+// ══════ DASHBOARD ══════
+function renderDashboard(){
+  getC();
+  let dmax=new Date(Cy,Cm+1,0).getDate();
+  let dailyHours=[], dailyLabels=[];
+  let mIzin=0, mSaat=0, mKaz=0;
+  for(let dn=1;dn<=dmax;dn++){
+    let key=`${dn}-${Cm}-${Cy}`, e=DB[key]||{};
+    let h=(e.r50||0)+(e.r65||0)+(e.r75||0)+(e.r100||0)+(e.r200||0)+(e.rX||0);
+    dailyHours.push(h); dailyLabels.push(dn);
+    mSaat+=h; mKaz+=dayEarning(e);
+    if(e.izin) mIzin++;
+  }
+  document.getElementById('dkSaat').textContent=mSaat+'s';
+  document.getElementById('dkKaz').textContent=f(mKaz)+'₺';
+  document.getElementById('dkIzin').textContent=mIzin;
+
+  // aylık toplam (bu yıl)
+  let monthly=[];
+  for(let m=0;m<12;m++){
+    let tot=0;
+    for(let k in DB){ let p=k.split('-'); if(+p[1]===m&&+p[2]===Cy) tot+=dayEarning(DB[k]); }
+    monthly.push(tot);
+  }
+  let yilToplam=monthly.reduce((a,b)=>a+b,0);
+  document.getElementById('dkYil').textContent=f(yilToplam)+'₺';
+
+  // yıllık karşılaştırma (bu yıl vs geçen yıl - toplam saat)
+  function yearHours(y){
+    let t=0; for(let k in DB){ let p=k.split('-'); if(+p[2]===y) t+=(DB[k].r50||0)+(DB[k].r65||0)+(DB[k].r75||0)+(DB[k].r100||0)+(DB[k].r200||0)+(DB[k].rX||0); }
+    return t;
+  }
+  let yearData=[Cy-1,Cy].map(y=>({label:''+y,val:yearHours(y)}));
+
+  drawBarChart('chartDaily', dailyLabels, dailyHours, getCssVar('--P'), 's');
+  drawBarChart('chartMonthly', MN.map(m=>m.slice(0,3)), monthly, getCssVar('--G'), '₺', true);
+  drawBarChart('chartYearly', yearData.map(y=>y.label), yearData.map(y=>y.val), getCssVar('--V'), 's');
+}
+function getCssVar(name){ return getComputedStyle(document.body).getPropertyValue(name).trim()||'#1a56db'; }
+
+function drawBarChart(canvasId, labels, values, color, unit, compact){
+  let cv=document.getElementById(canvasId);
+  if(!cv) return;
+  let dpr=window.devicePixelRatio||1;
+  let cssW=cv.parentElement.clientWidth-24||300, cssH=120;
+  cv.style.width=cssW+'px'; cv.style.height=cssH+'px';
+  cv.width=cssW*dpr; cv.height=cssH*dpr;
+  let ctx=cv.getContext('2d'); ctx.scale(dpr,dpr);
+  ctx.clearRect(0,0,cssW,cssH);
+  let max=Math.max(...values,1);
+  let n=values.length;
+  let padL=2, padB=14, chartH=cssH-padB;
+  let bw=(cssW-padL*2)/n;
+  ctx.font='7px Plus Jakarta Sans, sans-serif';
+  values.forEach((v,i)=>{
+    let bh=max>0?(v/max)*(chartH-8):0;
+    let x=padL+i*bw, y=chartH-bh;
+    ctx.fillStyle=v>0?color:'#e5e7eb';
+    let w=Math.max(bw-3,2);
+    roundRect(ctx,x+1,y,w,bh,2);
+    ctx.fillStyle='#9ca3af';
+    ctx.textAlign='center';
+    if(!compact || i%2===0 || n<=12) ctx.fillText(String(labels[i]).slice(0,3), x+bw/2, cssH-3);
+  });
+}
+function roundRect(ctx,x,y,w,h,r){
+  if(h<=0){return;}
+  r=Math.min(r,w/2,h/2);
+  ctx.beginPath();
+  ctx.moveTo(x+r,y);
+  ctx.arcTo(x+w,y,x+w,y+h,r);
+  ctx.arcTo(x+w,y+h,x,y+h,r);
+  ctx.arcTo(x,y+h,x,y,r);
+  ctx.arcTo(x,y,x+w,y,r);
+  ctx.closePath();
+  ctx.fill();
+}
+
+// ══════ PDF / EXCEL EXPORT ══════
+function buildReportRows(){
+  let dmax=new Date(Cy,Cm+1,0).getDate();
+  getC();
+  let rows=[['Gün','Saat','Kazanç (₺)','İzin']];
+  for(let dn=1;dn<=dmax;dn++){
+    let key=`${dn}-${Cm}-${Cy}`, e=DB[key]||{};
+    let h=(e.r50||0)+(e.r65||0)+(e.r75||0)+(e.r100||0)+(e.r200||0)+(e.rX||0);
+    if(h===0 && !e.izin) continue;
+    rows.push([dn, h, Math.round(dayEarning(e)), e.izin?ILF[e.izin]:'']);
+  }
+  return rows;
+}
+function ensureLib(src, checkFn){
+  return new Promise((res,rej)=>{
+    if(checkFn()) return res();
+    let s=document.createElement('script');
+    s.src=src;
+    s.onload=()=>res();
+    s.onerror=()=>rej(new Error('Kütüphane yüklenemedi: '+src));
+    document.head.appendChild(s);
+  });
+}
+async function exportPDF(){
+  try{
+    await ensureLib('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js', ()=>window.jspdf);
+    let {jsPDF}=window.jspdf;
+    let doc=new jsPDF();
+    let staffName=(STAFF_LIST.find(s=>s.id===ACTIVE_PROFILE)||{}).name||SETTINGS.name||'Personel';
+    doc.setFontSize(14); doc.text(`Mesai Raporu — ${staffName}`, 14, 16);
+    doc.setFontSize(10); doc.text(`${MN[Cm]} ${Cy}`, 14, 23);
+    let rows=buildReportRows();
+    let y=34;
+    doc.setFontSize(9);
+    rows.forEach((r,i)=>{
+      if(i===0) doc.setFont(undefined,'bold'); else doc.setFont(undefined,'normal');
+      doc.text(String(r[0]),14,y); doc.text(String(r[1]),40,y); doc.text(String(r[2]),70,y); doc.text(String(r[3]),105,y);
+      y+=6;
+      if(y>280){ doc.addPage(); y=20; }
+    });
+    doc.save(`mesai_${MN[Cm]}_${Cy}.pdf`);
+    toast('✅ PDF indirildi');
+  }catch(err){ toast('⚠️ PDF oluşturulamadı (internet gerekli)'); }
+}
+async function exportExcel(){
+  try{
+    await ensureLib('https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js', ()=>window.XLSX);
+    let rows=buildReportRows();
+    let ws=XLSX.utils.aoa_to_sheet(rows);
+    let wb=XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, MN[Cm]+' '+Cy);
+    XLSX.writeFile(wb, `mesai_${MN[Cm]}_${Cy}.xlsx`);
+    toast('✅ Excel indirildi');
+  }catch(err){ toast('⚠️ Excel oluşturulamadı (internet gerekli)'); }
+}
+
+// ══════ YEDEKLEME (BACKUP/RESTORE) ══════
+function exportBackup(){
+  let data={
+    version:12, exportedAt:new Date().toISOString(), profile:ACTIVE_PROFILE,
+    DB, SETTINGS, PLAN_IZINLER, staffList:STAFF_LIST
+  };
+  let blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  let a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download=`mesai_yedek_${ACTIVE_PROFILE}_${Date.now()}.json`;
+  a.click();
+  toast('✅ Yedek dosyası indirildi');
+}
+function importBackup(file){
+  if(!file) return;
+  let reader=new FileReader();
+  reader.onload=function(e){
+    try{
+      let data=JSON.parse(e.target.result);
+      if(!confirm('Mevcut veriler bu profildeki yedekle değiştirilecek. Emin misiniz?')) return;
+      if(data.DB) DB=data.DB;
+      if(data.SETTINGS) SETTINGS=data.SETTINGS;
+      if(data.PLAN_IZINLER) PLAN_IZINLER=data.PLAN_IZINLER;
+      localStorage.setItem(K('mp11b'),JSON.stringify(DB));
+      localStorage.setItem(K('mp12_settings'),JSON.stringify(SETTINGS));
+      localStorage.setItem(K('mp12_plan'),JSON.stringify(PLAN_IZINLER));
+      toast('✅ Yedek geri yüklendi'); 
+      setTimeout(()=>location.reload(),700);
+    }catch(err){ toast('⚠️ Geçersiz yedek dosyası'); }
+  };
+  reader.readAsText(file);
+}
+
+// ══════ BİLDİRİM SİSTEMİ ══════
+function requestNotifPerm(){
+  if(!('Notification' in window)){ toast('⚠️ Tarayıcı bildirimleri desteklemiyor'); return; }
+  Notification.requestPermission().then(p=>{
+    SETTINGS.notif=(p==='granted');
+    saveSettingsData();
+    toast(p==='granted'?'✅ Bildirimler açık':'⚠️ Bildirim izni verilmedi');
+    loadSettingsForm();
+  });
+}
+function startNotificationLoop(){
+  // Sayfa açıkken periyodik kontrol (arka planda çalışan gerçek push bildirimleri için sunucu gereklidir)
+  setInterval(()=>{
+    if(!SETTINGS.notif || Notification.permission!=='granted') return;
+    let now=new Date();
+    if(now.getHours()===9 && now.getMinutes()===0){
+      let key=`${now.getDate()}-${now.getMonth()}-${now.getFullYear()}`;
+      let e=DB[key];
+      if(e && e.izin){
+        new Notification('İzin Hatırlatma', {body:`Bugün ${ILF[e.izin]||'izinli'}siniz.`});
+      }
+    }
+  }, 60000);
+}
+
+// ══════ GPS MESAİ GİRİŞİ ══════
+function gpsCheckIn(){
+  let btn=document.getElementById('gpsBtn');
+  if(!navigator.geolocation){ toast('⚠️ Cihaz GPS desteklemiyor'); return; }
+  if(btn){ btn.textContent='📍 Konum alınıyor...'; }
+  navigator.geolocation.getCurrentPosition(pos=>{
+    let {latitude,longitude}=pos.coords;
+    window._lastGPS={lat:latitude,lng:longitude,time:new Date().toISOString()};
+    if(btn){ btn.textContent=`✅ Konum alındı (${latitude.toFixed(4)}, ${longitude.toFixed(4)})`; btn.classList.add('ok'); }
+    toast('✅ GPS konumu mesai kaydına eklendi');
+  }, err=>{
+    if(btn) btn.textContent='📍 GPS ile Giriş Kaydet';
+    toast('⚠️ Konum alınamadı: izin verildiğinden emin olun');
+  }, {enableHighAccuracy:true, timeout:8000});
+}
+
+// ══════ FOTOĞRAF / BELGE EKLEME ══════
+function handlePhotoUpload(input, entryKey){
+  let files=input.files;
+  if(!files||!files.length) return;
+  if(!SETTINGS.docs) SETTINGS.docs={};
+  if(!SETTINGS.docs[entryKey]) SETTINGS.docs[entryKey]=[];
+  let remaining=files.length;
+  Array.from(files).forEach(file=>{
+    let reader=new FileReader();
+    reader.onload=e=>{
+      SETTINGS.docs[entryKey].push({name:file.name, data:e.target.result});
+      remaining--;
+      if(remaining===0){ saveSettingsData(); renderPhotoThumbs(entryKey); toast('✅ Belge eklendi'); }
+    };
+    reader.readAsDataURL(file);
+  });
+}
+function renderPhotoThumbs(entryKey){
+  let el=document.getElementById('photoThumbs');
+  if(!el) return;
+  let docs=(SETTINGS.docs&&SETTINGS.docs[entryKey])||[];
+  el.innerHTML=docs.map((d,i)=>`<div class="photo-thumb-wrap">
+      ${d.data.startsWith('data:image')?`<img class="photo-thumb" src="${d.data}">`:`<div class="photo-thumb" style="display:flex;align-items:center;justify-content:center;font-size:9px;background:var(--BG);">📄</div>`}
+      <div class="photo-thumb-del" onclick="delPhoto('${entryKey}',${i})">✕</div>
+    </div>`).join('');
+}
+function delPhoto(entryKey, i){
+  SETTINGS.docs[entryKey].splice(i,1);
+  saveSettingsData();
+  renderPhotoThumbs(entryKey);
+}
+
+// ══════ PWA DESTEĞİ ══════
+function registerPWA(){
+  try{
+    let manifest={
+      name:"Mesai & İzin Pro", short_name:"MesaiPro", start_url:".", display:"standalone",
+      background_color:"#f1f5fb", theme_color:"#1a56db",
+      icons:[{src:"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%231a56db'/%3E%3Ctext x='50' y='65' font-size='50' text-anchor='middle' fill='white'%3E%E2%8F%B1%EF%B8%8F%3C/text%3E%3C/svg%3E", sizes:"192x192", type:"image/svg+xml"}]
+    };
+    let blob=new Blob([JSON.stringify(manifest)], {type:'application/json'});
+    let link=document.createElement('link');
+    link.rel='manifest'; link.href=URL.createObjectURL(blob);
+    document.head.appendChild(link);
+    if('serviceWorker' in navigator){
+      let swCode=`self.addEventListener('fetch',e=>{});`;
+      let swBlob=new Blob([swCode],{type:'application/javascript'});
+      navigator.serviceWorker.register(URL.createObjectURL(swBlob)).catch(()=>{});
+    }
+  }catch(e){}
+}
+
 window.onload=function(){
   // load mali from old storage
   ['iMaas','iSaatUcr'].forEach(id=>{
-    let v=localStorage.getItem('mp11b_'+id);
+    let v=localStorage.getItem(K('mp11b')+'_'+id);
     if(v) document.getElementById(id).value=v;
   });
   // load from settings (maaş ve saat)
@@ -1392,17 +1884,12 @@ window.onload=function(){
   let now=new Date();
   document.getElementById('hdate').textContent=now.toLocaleDateString('tr-TR',{weekday:'long',day:'2-digit',month:'long'});
   renderCal();
+
+  renderStaffBar();
+  showLockIfNeeded();
+  registerPWA();
+  startNotificationLoop();
 };
-</script>
-<!-- PWA Service Worker -->
-<script>
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register("/mesai_takip/sw.js")
-      .then(reg => console.log('SW kayıtlı:', reg.scope))
-      .catch(err => console.log('SW hatası:', err));
-  });
-}
 </script>
 </body>
 </html>
