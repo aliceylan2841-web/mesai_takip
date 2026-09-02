@@ -31,7 +31,7 @@ body{font-family:var(--F);background:var(--BG);color:var(--TX);display:flex;flex
 .hd-t{color:#fff;font-size:13px;font-weight:900;}
 .hd-t em{color:#93c5fd;font-style:normal;}
 .hd-d{color:#bfdbfe;font-size:9px;font-family:var(--M);}
-.hd-dl{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:7px;padding:5px 8px;font-size:3px;font-weight:800;font-family:var(--F);display:flex;align-items:center;gap:4px;}
+.hd-dl{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:7px;padding:5px 8px;font-size:10px;font-weight:800;font-family:var(--F);display:flex;align-items:center;gap:4px;}
 
 /* TABS */
 .tabs{height:50px;display:flex;background:var(--CARD);border-bottom:3px solid var(--BD);flex-shrink:0;}
@@ -80,7 +80,7 @@ body.dark .d.col{background:#1e2130;}
 .d.csa{border-color:var(--V);background:var(--VL);}
 .d.cev{border-color:var(--O);background:var(--OL);}
 .dn{font-weight:900;font-size:11px;line-height:1;}
-.di{font-size:2px;font-weight:800;color:var(--G);line-height:1;margin-top:1px;text-align:center;}
+.di{font-size:9px;font-weight:800;color:var(--G);line-height:1.2;margin-top:1px;text-align:center;}
 .diz{font-size:9px;line-height:1;margin-top:1px;}
 .xb{position:absolute;top:-4px;right:-4px;background:var(--R);color:#fff;border-radius:50%;width:13px;height:13px;display:flex;align-items:center;justify-content:center;font-size:7px;font-weight:900;border:1.5px solid #fff;z-index:5;}
 
@@ -258,6 +258,12 @@ body.dark .ff input, body.dark .ff select, body.dark .ff textarea{background:#1e
    AYARLAR
 ═══════════════════════════════════════ */
 .settings-section{background:var(--CARD);border-radius:12px;margin-bottom:10px;overflow:hidden;box-shadow:var(--SH);border:1px solid var(--BD);}
+.set-tabs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;position:sticky;top:0;z-index:10;background:var(--BG);padding:4px 0 8px;}
+.set-tab{flex:1 1 30%;min-width:88px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:8px 4px;border-radius:10px;background:var(--CARD);border:1.5px solid var(--BD);color:var(--TX2);font-size:9px;font-weight:800;text-align:center;cursor:pointer;transition:background .15s,color .15s,border-color .15s;}
+.set-tab .set-tab-ic{font-size:15px;line-height:1;}
+.set-tab.on{background:var(--PL);color:var(--P);border-color:var(--P);}
+.set-panel{display:none;}
+.set-panel.on{display:block;}
 .settings-header{padding:10px 14px;border-bottom:1px solid var(--BD);background:linear-gradient(90deg,var(--PL),var(--CARD));}
 .settings-header-title{font-size:12px;font-weight:900;color:var(--P);}
 .settings-row{display:flex;align-items:center;padding:11px 14px;border-bottom:1px solid var(--BD);gap:10px;}
@@ -282,6 +288,40 @@ body.dark .ff input, body.dark .ff select, body.dark .ff textarea{background:#1e
 .hak-f label{font-size:9px;font-weight:800;color:var(--TX2);}
 .hak-f input{border:1.5px solid var(--BD);background:var(--CARD);border-radius:6px;padding:5px 7px;font-size:11px;font-weight:700;color:var(--TX);font-family:var(--F);}
 .hak-add-btn{background:var(--BG);color:var(--V);border:1.5px solid var(--V);border-radius:8px;padding:7px;font-weight:800;font-size:11px;font-family:var(--F);width:100%;cursor:pointer;}
+
+/* GELİR DETAYI MODAL */
+.gd-row{display:flex;justify-content:space-between;align-items:center;padding:8px 10px;border-radius:8px;background:var(--BG);margin-bottom:6px;}
+.gd-name{font-size:11px;font-weight:800;color:var(--TX);}
+.gd-date{font-size:8px;font-weight:700;color:var(--TX2);margin-top:1px;}
+.gd-amt{font-size:12px;font-weight:900;color:var(--V);font-family:var(--M);}
+.gd-total{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;border-radius:9px;background:var(--VL);margin:6px 0 12px;}
+.gd-total .l{font-size:10px;font-weight:800;color:var(--V);}
+.gd-total .v{font-size:15px;font-weight:900;color:var(--V);font-family:var(--M);}
+.gd-empty{font-size:10px;color:var(--TX2);text-align:center;padding:14px 0;font-weight:700;}
+
+/* AYLIK ÖZET TABLOSU */
+.ozet-tbl-wrap{overflow-x:auto;}
+.ozet-tbl{width:100%;border-collapse:collapse;font-size:9px;min-width:520px;}
+.ozet-tbl th{background:var(--BG);color:var(--TX2);font-weight:800;padding:6px 5px;text-align:right;position:sticky;top:0;white-space:nowrap;}
+.ozet-tbl th:first-child{text-align:left;}
+.ozet-tbl td{padding:6px 5px;text-align:right;font-weight:700;color:var(--TX);border-bottom:1px solid var(--BD);font-family:var(--M);white-space:nowrap;}
+.ozet-tbl td:first-child{text-align:left;font-family:var(--F);font-weight:800;}
+.ozet-tbl tr.cur td{background:var(--PL);}
+.ozet-tbl tr.tot td{background:var(--VL);color:var(--V);font-weight:900;border-top:2px solid var(--V);border-bottom:none;}
+.ozet-tbl td.pos{color:var(--G);}
+
+/* ÖDEME TAKVİMİ */
+.tkv-hero{background:linear-gradient(135deg,var(--P2),var(--P));border-radius:10px;padding:10px 12px;color:#fff;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;}
+.tkv-hero .l{font-size:9px;opacity:.85;font-weight:800;}
+.tkv-hero .v{font-size:16px;font-weight:900;font-family:var(--M);margin-top:2px;}
+.tkv-item{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:9px;background:var(--BG);margin-bottom:6px;border-left:3px solid var(--O);}
+.tkv-day{width:34px;height:34px;border-radius:8px;background:var(--OL);color:var(--O);display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:900;font-size:12px;line-height:1;flex-shrink:0;}
+.tkv-day span{font-size:7px;font-weight:700;}
+.tkv-info{flex:1;min-width:0;}
+.tkv-name{font-size:11px;font-weight:800;color:var(--TX);}
+.tkv-note{font-size:8px;color:var(--TX2);font-weight:700;}
+.tkv-amt{font-size:11px;font-weight:900;color:var(--O);font-family:var(--M);flex-shrink:0;}
+.tkv-empty{font-size:10px;color:var(--TX2);text-align:center;padding:12px 0;font-weight:700;}
 
 /* KILAVUZ */
 .gc{background:var(--CARD);border-radius:12px;overflow:hidden;box-shadow:var(--SH);border:1px solid var(--BD);margin-bottom:10px;}
@@ -460,7 +500,12 @@ body.dark .ff input, body.dark .ff select, body.dark .ff textarea{background:#1e
       <div class="eb"><div class="el">SAAT ÜCRETİ (₺)</div><input type="number" id="iSaatUcr" class="ei" placeholder="Otomatik" oninput="calcOnly();saveSettingsQuick()"></div>
       <div class="eb"><div class="el">İKRAMİYE (₺)</div><input type="number" id="iIkr" class="ei" placeholder="0" oninput="saveMonthExtra('iIkr');calcOnly()"></div>
       <div class="eb"><div class="el">DEVAMLILIK (₺)</div><input type="number" id="iDev" class="ei" placeholder="0" oninput="saveMonthExtra('iDev');calcOnly()"></div>
-      <div class="eb" style="grid-column: span 2;"><div class="el">DİĞER (₺)</div><input type="number" id="iDig" class="ei" placeholder="0" oninput="saveMonthExtra('iDig');calcOnly()"></div>
+      <div class="eb" style="grid-column: span 2;">
+        <div class="el" style="display:flex;justify-content:space-between;align-items:center;">
+          <span>DİĞER (₺) — OTOMATİK</span>
+          <span style="color:var(--V);font-weight:900;cursor:pointer;font-size:9px;" onclick="showGelirDetay()">🔍 Detay <span id="digCount"></span></span>
+        </div>
+        <input type="number" id="iDig" class="ei" placeholder="0" readonly style="background:var(--VL);color:var(--V);cursor:pointer;" onclick="showGelirDetay()"></div>
     </div></div>
     <div class="tr">
       <div class="tb p"><div class="tl">MAAŞ</div><div class="tv" id="tM">0₺</div></div>
@@ -502,6 +547,22 @@ body.dark .ff input, body.dark .ff select, body.dark .ff textarea{background:#1e
     <div class="dash-card">
       <div class="dash-title">Yıllık Karşılaştırma</div>
       <canvas id="chartYearly" height="120"></canvas>
+    </div>
+
+    <div class="dash-card">
+      <div class="dash-title" style="cursor:pointer;" onclick="toggleOzetTbl()">
+        <span>📊 Aylık Özet Tablosu (<span id="ozetYilLbl">—</span>)</span>
+        <span id="ozetToggleIc" style="font-size:11px;color:var(--TX2);">▾ Göster</span>
+      </div>
+      <div id="ozetTblBox" style="display:none;">
+        <div class="ozet-tbl-wrap">
+          <table class="ozet-tbl">
+            <thead><tr><th>Ay</th><th>Maaş</th><th>Mesai</th><th>İkr.</th><th>Dev.</th><th>Diğer</th><th>Toplam</th></tr></thead>
+            <tbody id="ozetTblBody"></tbody>
+          </table>
+        </div>
+        <div style="font-size:8px;color:var(--TX2);font-weight:700;margin-top:6px;">💡 Maaş, o ayki mevcut Net Maaş değeri baz alınarak gösterilir. Mesai, İkramiye, Devamlılık ve Diğer o aya ait gerçek kayıtlardan hesaplanır.</div>
+      </div>
     </div>
 
     <div class="dash-card">
@@ -606,17 +667,29 @@ body.dark .ff input, body.dark .ff select, body.dark .ff textarea{background:#1e
       <div class="gst"><div class="sn">4</div><div><div class="stt">Maaş & Ek Gelir</div><div class="sd">Maaş, ikramiye, devamlılık ve diğer gelirleri girin. Şirket içi ve genel toplam otomatik hesaplanır.</div></div></div>
       <div class="gst"><div class="sn">5</div><div><div class="stt">İzin Takip Grafiği</div><div class="sd">İzin Takip sekmesinde bu ay ve genel grafik otomatik oluşur. İzin nedenine göre detay görürsünüz.</div></div></div>
       <div class="gst"><div class="sn">6</div><div><div class="stt">Yıllık Plan</div><div class="sd">Ayarlar'dan adınızı ve işe giriş tarihinizi girin. Yıllık izin hakkı otomatik hesaplanır.</div></div></div>
+      <div class="gst"><div class="sn">7</div><div><div class="stt">Ek Haklar → Otomatik Diğer Gelir</div><div class="sd">Ayarlar → Ek Haklar'a tarih ve tutar girdiğiniz her ödeme, ait olduğu ayın "Diğer" gelirine otomatik eklenir. Tarih değişirse veya kayıt silinirse ilgili ay otomatik güncellenir. Mesai ekranındaki "🔍 Detay" ile o ayın dökümünü görebilirsiniz.</div></div></div>
+      <div class="gst"><div class="sn">8</div><div><div class="stt">Aylık Özet & Ödeme Takvimi</div><div class="sd">Dashboard'daki "Aylık Özet Tablosu" tüm yılı tek bakışta gösterir. Ayarlar → Ek Haklar'daki "Ödeme Takvimi" ise bu ay beklenen ek ödemeleri tarih sırasıyla listeler.</div></div></div>
 
     </div>
     <div class="tb2"><div class="tbi">💡</div><div class="tbt">Günü silmek için takvimde köşedeki kırmızı × butonuna dokunun. Tüm veriler cihaza kaydedilir.</div></div>
-    <div class="ver">Mesai & İzin Takip Pro v13.0 · Veriler cihazınızda saklanır</div>
+    <div class="ver">Mesai & İzin Takip Pro v14.0 · Veriler cihazınızda saklanır</div>
   </div>
 </div>
 
 <!-- ══════════ AYARLAR ══════════ -->
 <div class="pg" id="pg-s">
   <div class="sa">
+    <div class="set-tabs">
+      <div class="set-tab on" id="stab-kisisel" onclick="showSetTab('kisisel')"><span class="set-tab-ic">👤</span>Kişisel</div>
+      <div class="set-tab" id="stab-mali" onclick="showSetTab('mali')"><span class="set-tab-ic">💰</span>Mali</div>
+      <div class="set-tab" id="stab-hak" onclick="showSetTab('hak')"><span class="set-tab-ic">🎁</span>Ek Haklar</div>
+      <div class="set-tab" id="stab-gorunum" onclick="showSetTab('gorunum')"><span class="set-tab-ic">🎨</span>Görünüm</div>
+      <div class="set-tab" id="stab-guvenlik" onclick="showSetTab('guvenlik')"><span class="set-tab-ic">🔐</span>Güvenlik</div>
+      <div class="set-tab" id="stab-personel" onclick="showSetTab('personel')"><span class="set-tab-ic">👥</span>Personel</div>
+    </div>
+
     <!-- Kişisel Bilgiler -->
+    <div class="set-panel on" id="spanel-kisisel">
     <div class="settings-section">
       <div class="settings-header"><div class="settings-header-title">👤 Kişisel Bilgiler</div></div>
       <div style="padding:12px;">
@@ -631,8 +704,10 @@ body.dark .ff input, body.dark .ff select, body.dark .ff textarea{background:#1e
         <div class="ff"><label>ÖNCEKI YILDAN KALAN İZİN (gün)</label><input type="number" id="sCarry" class="settings-input" placeholder="0" min="0"></div>
       </div>
     </div>
+    </div>
 
     <!-- Mali Bilgiler -->
+    <div class="set-panel" id="spanel-mali">
     <div class="settings-section">
       <div class="settings-header"><div class="settings-header-title">💰 Mali Bilgiler</div></div>
       <div style="padding:12px;">
@@ -644,21 +719,28 @@ body.dark .ff input, body.dark .ff select, body.dark .ff textarea{background:#1e
           <div class="ff"><label>İKRAMİYE VARSAYILAN (₺)</label><input type="number" id="sIkrS" class="settings-input" placeholder="0"></div>
           <div class="ff"><label>DEVAMLILIK VARSAYILAN (₺)</label><input type="number" id="sDevS" class="settings-input" placeholder="0"></div>
         </div>
-        <div class="ff"><label>DİĞER GELİR VARSAYILAN (₺)</label><input type="number" id="sDigS" class="settings-input" placeholder="0"></div>
-        <div style="font-size:9px;color:var(--TX2);font-weight:700;padding:5px 8px;background:var(--BG);border-radius:6px;">💡 Varsayılan değerler: Her yeni ay için otomatik doldurulur. O ay farklı bir değer girerseniz, ayarlardaki değer geçersiz olur ve girdiğiniz değer kaydedilir.</div>
+        <div style="font-size:9px;color:var(--TX2);font-weight:700;padding:5px 8px;background:var(--BG);border-radius:6px;">💡 İkramiye ve Devamlılık: Her yeni ay için varsayılan olarak doldurulur. O ay farklı bir değer girerseniz, ayarlardaki değer geçersiz olur ve girdiğiniz değer kaydedilir.</div>
+        <div style="font-size:9px;color:var(--V);font-weight:700;padding:5px 8px;background:var(--VL);border-radius:6px;margin-top:4px;">🎁 Diğer Gelir artık burada girilmiyor — "Ek Haklar" sekmesine tarih ve tutar bazlı eklediğiniz her kayıt, ait olduğu aya otomatik yansır.</div>
       </div>
+    </div>
     </div>
 
     <!-- Ek Haklar -->
+    <div class="set-panel" id="spanel-hak">
     <div class="settings-section">
       <div class="settings-header"><div class="settings-header-title">🎁 Ek Haklar & Ödemeler</div></div>
       <div style="padding:12px;">
+        <div class="settings-header-title" style="font-size:11px;margin-bottom:8px;">📅 Ödeme Takvimi</div>
+        <div id="tkvWrap"></div>
+        <div class="settings-header-title" style="font-size:11px;margin:14px 0 8px;">🎁 Kayıtlı Haklar</div>
         <div id="hakList"></div>
         <button class="hak-add-btn" onclick="addHak()">➕ Hak / Ödeme Ekle</button>
       </div>
     </div>
+    </div>
 
     <!-- Görünüm -->
+    <div class="set-panel" id="spanel-gorunum">
     <div class="settings-section">
       <div class="settings-header"><div class="settings-header-title">🎨 Görünüm & Tercihler</div></div>
       <div class="settings-row">
@@ -678,8 +760,10 @@ body.dark .ff input, body.dark .ff select, body.dark .ff textarea{background:#1e
         <div class="toggle" id="soundToggle" onclick="toggleSound()"><div class="toggle-ball"></div></div>
       </div>
     </div>
+    </div>
 
     <!-- Güvenlik & Bildirim -->
+    <div class="set-panel" id="spanel-guvenlik">
     <div class="settings-section">
       <div class="settings-header"><div class="settings-header-title">🔐 Güvenlik & Bildirimler</div></div>
       <div class="settings-row">
@@ -722,14 +806,17 @@ body.dark .ff input, body.dark .ff select, body.dark .ff textarea{background:#1e
         <div class="photo-thumb-row" id="photoThumbs"></div>
       </div>
     </div>
+    </div>
 
     <!-- Personel Yönetimi -->
+    <div class="set-panel" id="spanel-personel">
     <div class="settings-section">
       <div class="settings-header"><div class="settings-header-title">👥 Personel Profilleri</div></div>
       <div class="settings-row" style="flex-direction:column;align-items:flex-start;">
         <div class="settings-row-sub" style="margin-bottom:6px;">Her personel kendi mesai/izin verisini ayrı saklar. Üstteki profil şeridinden geçiş yapabilirsiniz.</div>
         <button class="plan-add-btn" onclick="addStaff()">➕ Yeni Personel Ekle</button>
       </div>
+    </div>
     </div>
 
     <button class="settings-save-btn" onclick="saveSettings()">💾 Ayarları Kaydet</button>
@@ -848,6 +935,16 @@ body.dark .ff input, body.dark .ff select, body.dark .ff textarea{background:#1e
   </div>
 </div>
 
+<div class="ov" id="ovGelirDetay">
+  <div class="mb">
+    <div class="mh"></div>
+    <div class="mt" id="gdTitle">🎁 Diğer Gelir Detayı</div>
+    <div id="gdList"></div>
+    <div class="gd-total"><span class="l">TOPLAM DİĞER GELİR</span><span class="v" id="gdTotal">0₺</span></div>
+    <button class="bs" onclick="hide('ovGelirDetay')">Kapat</button>
+  </div>
+</div>
+
     </div>
  
   </div>
@@ -874,9 +971,9 @@ function addStaff(){
   renderStaffBar();
   toast('✅ '+name.trim()+' eklendi');
 }
-function delStaff(id){
+async function delStaff(id){
   if(id==='default'){toast('⚠️ Varsayılan profil silinemez');return;}
-  if(!confirm('Bu personeli ve tüm verilerini silmek istediğinize emin misiniz?')) return;
+  if(!await customConfirm('Bu personeli ve tüm verilerini silmek istediğinize emin misiniz?')) return;
   STAFF_LIST=STAFF_LIST.filter(s=>s.id!==id);
   saveStaffList();
   if(ACTIVE_PROFILE===id) switchProfile('default'); else renderStaffBar();
@@ -945,6 +1042,7 @@ function ST(n){
   document.querySelectorAll('.tab').forEach(b=>b.classList.remove('on'));
   document.getElementById('pg-'+n).classList.add('on');
   document.getElementById('tab-'+n).classList.add('on');
+  if(n==='m'){ loadMonthExtras(); calcOnly(); }
   if(n==='i') renderIzinChart('ay');
   if(n==='p') renderPlanPage();
   if(n==='s') loadSettingsForm();
@@ -975,19 +1073,64 @@ function dayEarning(ent){
 }
 function getMonthKey(m,y){return `${m}_${y}`;}
 function loadMonthExtras(){
-  // İkramiye, devamlılık, diğer — aya özel yükle
+  // İkramiye, devamlılık — aya özel yükle (manuel)
   let mk=getMonthKey(Cm,Cy);
-  ['iIkr','iDev','iDig'].forEach(id=>{
+  ['iIkr','iDev'].forEach(id=>{
     let stored=localStorage.getItem(K('mp11b')+'_'+id+'_'+mk);
     let el=document.getElementById(id);
     if(stored!==null){
       el.value=stored;
     } else {
       // Ayarlar'da tanımlı sabit değer varsa onu yükle
-      let settingsVal=id==='iIkr'?SETTINGS.ikr:id==='iDev'?SETTINGS.dev:SETTINGS.dig;
+      let settingsVal=id==='iIkr'?SETTINGS.ikr:SETTINGS.dev;
       el.value=settingsVal||'';
     }
   });
+  // Diğer gelir — Ek Haklar listesinden otomatik hesaplanır
+  updateDigField();
+}
+
+// ══════ EK HAKLAR → OTOMATİK AY BAĞLANTISI ══════
+function hakMonthlyBreakdown(m,y){
+  let items=[];
+  (SETTINGS.hak||[]).forEach(h=>{
+    if(!h.date) return;
+    let dt=new Date(h.date+'T00:00:00');
+    if(isNaN(dt.getTime())) return;
+    if(dt.getMonth()===m && dt.getFullYear()===y){
+      let amt=parseFloat(h.amount)||0;
+      items.push({name:h.name||'İsimsiz Hak', amount:amt, date:h.date, note:h.note||''});
+    }
+  });
+  items.sort((a,b)=>a.date.localeCompare(b.date));
+  return items;
+}
+function hakMonthlyTotal(m,y){
+  return hakMonthlyBreakdown(m,y).reduce((s,i)=>s+i.amount,0);
+}
+function updateDigField(){
+  let tot=hakMonthlyTotal(Cm,Cy);
+  let el=document.getElementById('iDig');
+  if(el) el.value=tot||'';
+  let cnt=hakMonthlyBreakdown(Cm,Cy).length;
+  let lbl=document.getElementById('digCount');
+  if(lbl) lbl.textContent=cnt>0?`(${cnt})`:'';
+}
+function showGelirDetay(){
+  let items=hakMonthlyBreakdown(Cm,Cy);
+  document.getElementById('gdTitle').textContent=`🎁 ${MN[Cm]} ${Cy} — Diğer Gelir Detayı`;
+  let listEl=document.getElementById('gdList');
+  if(!items.length){
+    listEl.innerHTML='<div class="gd-empty">Bu ay için Ek Haklar listesinde kayıtlı bir ödeme yok. "Ayarlar → Ek Haklar" bölümünden tarih girerek ekleyebilirsiniz.</div>';
+  } else {
+    listEl.innerHTML=items.map(i=>{
+      let d=new Date(i.date+'T00:00:00');
+      let dstr=d.getDate()+' '+MN[d.getMonth()].slice(0,3);
+      return `<div class="gd-row"><div><div class="gd-name">${i.name}</div><div class="gd-date">📅 ${dstr}${i.note?' · '+i.note:''}</div></div><div class="gd-amt">${f(i.amount)}₺</div></div>`;
+    }).join('');
+  }
+  document.getElementById('gdTotal').textContent=f(items.reduce((s,i)=>s+i.amount,0))+'₺';
+  show('ovGelirDetay');
 }
 function saveMonthExtra(id){
   let mk=getMonthKey(Cm,Cy);
@@ -1000,6 +1143,7 @@ function saveMonthExtra(id){
 }
 function calcOnly(){
   getC();
+  updateDigField();
   let mesaiK=0,totalH=0;
   for(let k in DB){
     let p=k.split('-');
@@ -1106,7 +1250,7 @@ function renderDagil(){
   el.innerHTML=''; el.appendChild(frag);
 }
 function CM(d){Cm+=d;if(Cm>11){Cm=0;Cy++;}if(Cm<0){Cm=11;Cy--;}loadMonthExtras();renderCal();}
-function delDay(d){if(confirm(`${d} ${MN[Cm]} silinsin mi?`)){delete DB[`${d}-${Cm}-${Cy}`];renderCal();}}
+async function delDay(d){if(await customConfirm(`${d} ${MN[Cm]} silinsin mi?`)){delete DB[`${d}-${Cm}-${Cy}`];renderCal();}}
 
 function openDay(d){
   eDay=d;
@@ -1464,9 +1608,9 @@ function loadSettingsForm(){
   document.getElementById('sSaatS').value=s.saat||'';
   document.getElementById('sIkrS').value=s.ikr||'';
   document.getElementById('sDevS').value=s.dev||'';
-  document.getElementById('sDigS').value=s.dig||'';
   if(s.startDate) calcAutoQuota();
   renderHakList();
+  renderTakvim();
   let pinSub=document.getElementById('pinStatusSub');
   if(pinSub) pinSub.textContent=getPin()?'Açık — cihazda korumalı':'Kapalı';
   let notifT=document.getElementById('notifToggle');
@@ -1493,16 +1637,15 @@ function saveSettings(){
   SETTINGS.saat=parseFloat(document.getElementById('sSaatS').value)||0;
   SETTINGS.ikr=parseFloat(document.getElementById('sIkrS').value)||0;
   SETTINGS.dev=parseFloat(document.getElementById('sDevS').value)||0;
-  SETTINGS.dig=parseFloat(document.getElementById('sDigS').value)||0;
   // Sync mali to mesai page (sadece maaş ve saat ücreti, aya özel olanlar hariç)
   if(SETTINGS.maas) document.getElementById('iMaas').value=SETTINGS.maas;
   if(SETTINGS.saat) document.getElementById('iSaatUcr').value=SETTINGS.saat;
-  // ikr/dev/dig: sadece bu ay için kayıt yoksa ayarlar değerini uygula
-  ['iIkr','iDev','iDig'].forEach(id=>{
+  // ikr/dev: sadece bu ay için kayıt yoksa ayarlar değerini uygula (diğer gelir artık Ek Haklar'dan otomatik)
+  ['iIkr','iDev'].forEach(id=>{
     let mk=getMonthKey(Cm,Cy);
     let stored=localStorage.getItem(K('mp11b')+'_'+id+'_'+mk);
     if(stored===null){
-      let settingsVal=id==='iIkr'?SETTINGS.ikr:id==='iDev'?SETTINGS.dev:SETTINGS.dig;
+      let settingsVal=id==='iIkr'?SETTINGS.ikr:SETTINGS.dev;
       if(settingsVal) document.getElementById(id).value=settingsVal;
     }
   });
@@ -1539,10 +1682,18 @@ function addHak(){
   if(!SETTINGS.hak) SETTINGS.hak=[];
   SETTINGS.hak.push({name:'',amount:'',date:'',note:''});
   renderHakList();
+  saveHakLive();
 }
-function delHak(idx){
+async function delHak(idx){
+  if(!await customConfirm('Bu ek hak/ödeme silinsin mi? İlgili aydan otomatik düşecektir.')) return;
   SETTINGS.hak.splice(idx,1);
   renderHakList();
+  saveHakLive();
+}
+function saveHakLive(){
+  saveSettingsData();
+  updateDigField();
+  renderTakvim();
 }
 function renderHakList(){
   let el=document.getElementById('hakList');
@@ -1552,10 +1703,10 @@ function renderHakList(){
     html+=`<div class="hak-item">
       <div class="hak-head"><span class="hak-name">${h.name||'Yeni Hak'}</span><span class="hak-del" onclick="delHak(${i})">🗑️</span></div>
       <div class="hak-grid">
-        <div class="hak-f"><label>HAK ADI</label><input type="text" value="${h.name||''}" placeholder="İkramiye, Yemek..." oninput="SETTINGS.hak[${i}].name=this.value;renderHakListMini(${i})"></div>
-        <div class="hak-f"><label>TUTAR (₺)</label><input type="number" value="${h.amount||''}" placeholder="0" oninput="SETTINGS.hak[${i}].amount=this.value"></div>
-        <div class="hak-f"><label>TARİH</label><input type="date" value="${h.date||''}" oninput="SETTINGS.hak[${i}].date=this.value"></div>
-        <div class="hak-f"><label>NOT</label><input type="text" value="${h.note||''}" placeholder="Açıklama" oninput="SETTINGS.hak[${i}].note=this.value"></div>
+        <div class="hak-f"><label>HAK ADI</label><input type="text" value="${h.name||''}" placeholder="İkramiye, Yemek..." oninput="SETTINGS.hak[${i}].name=this.value;renderHakListMini(${i});saveHakLive()"></div>
+        <div class="hak-f"><label>TUTAR (₺)</label><input type="number" value="${h.amount||''}" placeholder="0" oninput="SETTINGS.hak[${i}].amount=this.value;saveHakLive()"></div>
+        <div class="hak-f"><label>TARİH</label><input type="date" value="${h.date||''}" oninput="SETTINGS.hak[${i}].date=this.value;saveHakLive()"></div>
+        <div class="hak-f"><label>NOT</label><input type="text" value="${h.note||''}" placeholder="Açıklama" oninput="SETTINGS.hak[${i}].note=this.value;saveHakLive()"></div>
       </div>
     </div>`;
   });
@@ -1567,6 +1718,27 @@ function renderHakListMini(i){
   if(items[i]) items[i].textContent=SETTINGS.hak[i].name||'Yeni Hak';
 }
 
+// ══════ ÖDEME TAKVİMİ ══════
+function renderTakvim(){
+  let el=document.getElementById('tkvWrap');
+  if(!el) return;
+  let now=new Date(), m=now.getMonth(), y=now.getFullYear();
+  let items=hakMonthlyBreakdown(m,y);
+  let tot=items.reduce((s,i)=>s+i.amount,0);
+  let html=`<div class="tkv-hero"><div><div class="l">${MN[m]} ${y} BEKLENEN EK GELİR</div><div class="v">${f(tot)}₺</div></div><div style="font-size:22px;">🎁</div></div>`;
+  if(!items.length){
+    html+='<div class="tkv-empty">Bu ay için planlı bir ödeme kaydı yok.</div>';
+  } else {
+    html+=items.map(i=>{
+      let d=new Date(i.date+'T00:00:00');
+      return `<div class="tkv-item"><div class="tkv-day">${d.getDate()}<span>${MN[d.getMonth()].slice(0,3)}</span></div>
+        <div class="tkv-info"><div class="tkv-name">${i.name}</div><div class="tkv-note">${i.note||'Ek hak / ödeme'}</div></div>
+        <div class="tkv-amt">${f(i.amount)}₺</div></div>`;
+    }).join('');
+  }
+  el.innerHTML=html;
+}
+
 // ══════ SAVE / LOAD ══════
 function saveAll(){
   localStorage.setItem(K('mp11b'),JSON.stringify(DB));
@@ -1574,19 +1746,57 @@ function saveAll(){
     let el=document.getElementById(id);
     if(el) localStorage.setItem(K('mp11b')+'_'+id, el.value);
   });
-  // aya özel alanları kaydet
-  ['iIkr','iDev','iDig'].forEach(id=>saveMonthExtra(id));
+  // aya özel alanları kaydet (iDig artık Ek Haklar'dan otomatik hesaplanır, ayrıca kaydedilmez)
+  ['iIkr','iDev'].forEach(id=>saveMonthExtra(id));
   saveSettingsData();
   toast('✅ Kaydedildi');
 }
 
 function showQR(){ show('ovQR'); }
 
+function showSetTab(key){
+  document.querySelectorAll('.set-tab').forEach(el=>el.classList.remove('on'));
+  document.querySelectorAll('.set-panel').forEach(el=>el.classList.remove('on'));
+  let tab=document.getElementById('stab-'+key), panel=document.getElementById('spanel-'+key);
+  if(tab) tab.classList.add('on');
+  if(panel) panel.classList.add('on');
+  let sa=document.querySelector('#pg-s .sa');
+  if(sa) sa.scrollTop=0;
+}
+
 function toast(msg){
   let t=document.createElement('div');
   t.style.cssText='position:fixed;bottom:68px;left:50%;transform:translateX(-50%);background:#111827;color:#fff;padding:7px 16px;border-radius:99px;font-size:12px;font-weight:800;z-index:9999;box-shadow:0 4px 16px rgba(0,0,0,.22);';
   t.textContent=msg; document.body.appendChild(t);
   setTimeout(()=>t.remove(),2200);
+}
+
+function customConfirm(msg){
+  return new Promise((resolve)=>{
+    let ov=document.createElement('div');
+    ov.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;z-index:99999;padding:20px;';
+    let box=document.createElement('div');
+    box.style.cssText='background:var(--CARD);color:var(--TX);border-radius:14px;padding:20px 18px;max-width:320px;width:100%;box-shadow:0 12px 32px rgba(0,0,0,.3);text-align:center;';
+    let txt=document.createElement('div');
+    txt.style.cssText='font-size:13px;font-weight:700;line-height:1.5;margin-bottom:16px;';
+    txt.textContent=msg;
+    let row=document.createElement('div');
+    row.style.cssText='display:flex;gap:8px;';
+    let cancelBtn=document.createElement('button');
+    cancelBtn.textContent='İptal';
+    cancelBtn.style.cssText='flex:1;padding:10px;border-radius:9px;border:1.5px solid var(--BD);background:transparent;color:var(--TX2);font-weight:800;font-size:12px;font-family:var(--F);cursor:pointer;';
+    let okBtn=document.createElement('button');
+    okBtn.textContent='Sil';
+    okBtn.style.cssText='flex:1;padding:10px;border-radius:9px;border:none;background:var(--R);color:#fff;font-weight:800;font-size:12px;font-family:var(--F);cursor:pointer;';
+    function close(result){ ov.remove(); resolve(result); }
+    cancelBtn.onclick=()=>close(false);
+    okBtn.onclick=()=>close(true);
+    ov.onclick=(e)=>{ if(e.target===ov) close(false); };
+    row.appendChild(cancelBtn); row.appendChild(okBtn);
+    box.appendChild(txt); box.appendChild(row);
+    ov.appendChild(box);
+    document.body.appendChild(ov);
+  });
 }
 
 function togglePriv(){
@@ -1642,6 +1852,46 @@ function renderDashboard(){
   drawBarChart('chartDaily', dailyLabels, dailyHours, getCssVar('--P'), 's');
   drawBarChart('chartMonthly', MN.map(m=>m.slice(0,3)), monthly, getCssVar('--G'), '₺', true);
   drawBarChart('chartYearly', yearData.map(y=>y.label), yearData.map(y=>y.val), getCssVar('--V'), 's');
+  // Aylık Özet Tablosu sadece açıkken hesaplanır (bkz. toggleOzetTbl)
+  let ozetBox=document.getElementById('ozetTblBox');
+  if(ozetBox && ozetBox.style.display==='block') renderAylikOzet();
+}
+
+// ══════ AYLIK ÖZET TABLOSU (katlanır) ══════
+function toggleOzetTbl(){
+  let box=document.getElementById('ozetTblBox');
+  let ic=document.getElementById('ozetToggleIc');
+  let opening=box.style.display==='none';
+  box.style.display=opening?'block':'none';
+  ic.textContent=opening?'▴ Gizle':'▾ Göster';
+  if(opening) renderAylikOzet();
+}
+function renderAylikOzet(){
+  let sal=_c.sal;
+  let nowM=new Date().getMonth(), nowY=new Date().getFullYear();
+  let rows=[], totals={maas:0,mesai:0,ikr:0,dev:0,dig:0,gen:0};
+  for(let m=0;m<12;m++){
+    let mesaiK=0;
+    for(let k in DB){ let p=k.split('-'); if(+p[1]===m&&+p[2]===Cy) mesaiK+=dayEarning(DB[k]); }
+    let mk=getMonthKey(m,Cy);
+    let ikrStored=localStorage.getItem(K('mp11b')+'_iIkr_'+mk);
+    let devStored=localStorage.getItem(K('mp11b')+'_iDev_'+mk);
+    let ikr=ikrStored!==null?(parseFloat(ikrStored)||0):(SETTINGS.ikr||0);
+    let dev=devStored!==null?(parseFloat(devStored)||0):(SETTINGS.dev||0);
+    let dig=hakMonthlyTotal(m,Cy);
+    let gen=sal+mesaiK+ikr+dev+dig;
+    rows.push({m,maas:sal,mesai:mesaiK,ikr,dev,dig,gen,cur:(m===nowM&&Cy===nowY)});
+    totals.maas+=sal; totals.mesai+=mesaiK; totals.ikr+=ikr; totals.dev+=dev; totals.dig+=dig; totals.gen+=gen;
+  }
+  let html=rows.map(r=>`<tr class="${r.cur?'cur':''}">
+      <td>${MN[r.m].slice(0,3)}</td><td>${f(r.maas)}</td><td class="pos">${f(r.mesai)}</td>
+      <td>${f(r.ikr)}</td><td>${f(r.dev)}</td><td>${f(r.dig)}</td><td>${f(r.gen)}</td>
+    </tr>`).join('');
+  html+=`<tr class="tot"><td>YILLIK</td><td>${f(totals.maas)}</td><td>${f(totals.mesai)}</td><td>${f(totals.ikr)}</td><td>${f(totals.dev)}</td><td>${f(totals.dig)}</td><td>${f(totals.gen)}</td></tr>`;
+  let body=document.getElementById('ozetTblBody');
+  if(body) body.innerHTML=html;
+  let lbl=document.getElementById('ozetYilLbl');
+  if(lbl) lbl.textContent=Cy;
 }
 function getCssVar(name){ return getComputedStyle(document.body).getPropertyValue(name).trim()||'#1a56db'; }
 
@@ -1755,10 +2005,10 @@ function exportBackup(){
 function importBackup(file){
   if(!file) return;
   let reader=new FileReader();
-  reader.onload=function(e){
+  reader.onload=async function(e){
     try{
       let data=JSON.parse(e.target.result);
-      if(!confirm('Mevcut veriler bu profildeki yedekle değiştirilecek. Emin misiniz?')) return;
+      if(!await customConfirm('Mevcut veriler bu profildeki yedekle değiştirilecek. Emin misiniz?')) return;
       if(data.DB) DB=data.DB;
       if(data.SETTINGS) SETTINGS=data.SETTINGS;
       if(data.PLAN_IZINLER) PLAN_IZINLER=data.PLAN_IZINLER;
